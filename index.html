@@ -3,13 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Restaurant.de</title>
-  <meta name="theme-color" content="#ff8000">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Restaurant.de">
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAADhElEQVR42u3d227bMBBFUVvQfyf9cvehRVGgSR1HonhmuPZTkJvGo80hJVLU/fF+Az5kkwKQA+QAOUAOkAPkADlADpAD5ADIAXKAHCAHyAFygBwgB8gBcgDkADlADpAD5AA5QA6QA+QAOQBygBwgB8iBK9gTg3p7/P7ix/2F73z7KF/h20d5esRT/vNCcox27vjfBp9RclwixBf/bV9Rdk6c3wmSgxYfH7qRIjstKNJajhAt2imyMWNsbMnh9ZejhL41FdmqplvM5Ghihm6FGeQAOUAOXQnKytHejOAPuEkcjDm0gZfZVz8xT6c/rjlzb4/AiZidDa/9/jhX8vy4x71XdlD2T897lTj7yDEi40PTXS5g3cp1Wf51iKZXVUmV48QUT2l81ePPvZRtkNkTj5tRijZm8GOBMUfIOK7RKCSgcpySx7Q7SOMen1xxzNHJjOSoKslxvHEkn4PjsU0tHibe1I9MORaZkT/ox7wsqRwIlGOphTw1i8e2Yq7FHC3Hkaawxq46CcVjL5+mdrtiGHOAHIailfOmcoAcIAcqy2HAUSd7NRf7uHAlx+QWubyCOy2e/GhhRTZmGCRlyBGV6K8HUzRsleOiFC9ZPzZm8IMcIMfQArBY8VA5QA6QA+QAOUAOkCODIxNpi03CqRwgx/ECsN7c/aqV4+A+xuTI6u8nBlM0bJVjeKIXXgnmrQmfb/5nDakxOQ90K8iXQxutkz2VA+QAOVBcDsOOInlTOUAOlJFDz1IhYzUrR8XnRwrGvFVtCrVyfTDaSYXWmAOZcixSPGqWjfqVI9+Pyo/Xzpaj+Iuuhsc29bKuxZgj04/6j+QHyNHiLZtD4pl9N6jRSrCQzf8a7eGR0a20ect3m/euZ405GvjRy4zb7XZ/vPcdxF2W4qJhLzTmmDIKab1LWFjlGJfu0xWpEmcrOUY3x+R79mErGSLluLJcPz0fOZGQY5HuPN+MW/Tt83VWi6V+0k3WfMaacoAcIAfIAXKAHCCHyz8x/0PZWdn/bPRGi9XlKKFI8Zt4LdZzBCrS4t5uo8U+IYo0uuXfbiXYREXazQQ1XSb45zxdYEnf2cHuOxj/febarQ4nx7Am/pIrS25FFLwSDLNx+xzkADlADpAD5AA5QA6QA+QAOQBygBwgB8gBcoAcIAfIAXKAHAA5QA6QA+QAOUAOkAPkADlADoAcIAfIgTP5CUUw+X8FlRkIAAAAAElFTkSuQmCC">
+<title>Lieferandi.de</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#f5f5f5; max-width:480px; margin:0 auto; min-height:100vh; padding-bottom:72px; }
@@ -18,7 +12,6 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
 .header-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
 .logo { color:#fff; font-size:21px; font-weight:900; }
 .logo span { color:#ffe066; }
-.header-right { display:flex; gap:10px; align-items:center; }
 .cart-pill { background:#fff; color:#ff8000; border:none; border-radius:20px; padding:6px 14px; font-size:13px; font-weight:800; cursor:pointer; display:flex; align-items:center; gap:6px; }
 .cart-pill .badge { background:#ff8000; color:#fff; border-radius:50%; width:19px; height:19px; font-size:11px; font-weight:900; display:flex; align-items:center; justify-content:center; }
 .addr-bar { background:#fff; border-radius:10px; padding:9px 13px; display:flex; align-items:center; gap:8px; font-size:13px; color:#333; margin-bottom:9px; }
@@ -34,8 +27,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
 .cuisine-btn { display:flex; flex-direction:column; align-items:center; gap:5px; min-width:60px; cursor:pointer; flex-shrink:0; }
 .cuisine-icon { width:54px; height:54px; border-radius:15px; background:#fff4e6; display:flex; align-items:center; justify-content:center; font-size:24px; border:2.5px solid transparent; transition:all .2s; }
 .cuisine-icon.active { border-color:#ff8000; background:#ffe8cc; }
-.cuisine-icon.locked { opacity:0.35; cursor:not-allowed; filter:grayscale(1); }
-.cuisine-lbl.locked { opacity:0.35; }
+.cuisine-btn.locked { opacity:0.35; pointer-events:none; filter:grayscale(1); }
 .cuisine-lbl { font-size:10px; font-weight:700; color:#666; text-align:center; }
 
 .course-row { display:flex; gap:8px; padding:11px 16px; overflow-x:auto; scrollbar-width:none; background:#fafafa; border-bottom:1px solid #eee; }
@@ -46,13 +38,12 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
 .dish-section { padding:14px 16px 6px; }
 .dish-section h4 { font-size:15px; font-weight:800; color:#111; margin-bottom:10px; }
 .dish-card { background:#fff; border-radius:14px; margin-bottom:10px; display:flex; align-items:flex-start; padding:13px; gap:12px; box-shadow:0 1px 6px rgba(0,0,0,.07); }
-.dish-card:hover { box-shadow:0 3px 12px rgba(0,0,0,.12); }
-.dish-emoji { font-size:38px; width:52px; height:52px; background:#f5f5f5; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.dish-img { width:72px; height:72px; border-radius:12px; object-fit:cover; flex-shrink:0; background:#f0f0f0; }
 .dish-info { flex:1; }
 .dish-name { font-size:14px; font-weight:800; color:#111; margin-bottom:3px; }
 .dish-desc { font-size:12px; color:#999; line-height:1.4; margin-bottom:6px; }
 .dish-price { font-size:15px; font-weight:800; color:#ff8000; }
-.add-dish-btn { background:#ff8000; color:#fff; border:none; width:32px; height:32px; border-radius:50%; font-size:22px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.add-dish-btn { background:#ff8000; color:#fff; border:none; width:32px; height:32px; border-radius:50%; font-size:22px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; align-self:center; }
 .add-dish-btn:hover { background:#e67000; }
 
 .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:300; }
@@ -77,6 +68,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
 .toast { position:fixed; bottom:88px; left:50%; transform:translateX(-50%); background:#111; color:#fff; padding:11px 22px; border-radius:28px; font-size:13px; font-weight:600; z-index:999; opacity:0; transition:opacity .3s; white-space:nowrap; pointer-events:none; }
 .toast.show { opacity:1; }
 
+.version-tag { text-align:center; font-size:10px; color:#bbb; padding:4px 0 2px; }
 .bnav { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; background:#fff; border-top:1px solid #eee; display:flex; z-index:200; }
 .bni { flex:1; display:flex; flex-direction:column; align-items:center; padding:9px 0 12px; cursor:pointer; font-size:10px; font-weight:600; color:#bbb; gap:3px; }
 .bni.active { color:#ff8000; }
@@ -87,7 +79,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
 
 <div class="header">
   <div class="header-top">
-    <div class="logo">Restaurant<span>.de</span> <span style="font-size:11px;font-weight:400;color:#fff;opacity:0.8;vertical-align:middle;">V. 1.0</span></div>
+    <div class="logo">Lieferandi<span>.de</span></div>
     <div class="header-right">
       <button class="cart-pill" onclick="openCart()">🛒 Warenkorb <span class="badge" id="cartCount">0</span></button>
     </div>
@@ -123,8 +115,9 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
 
 <div class="toast" id="toast"></div>
 
+<div class="version-tag">v. 1.0</div>
 <div class="bnav">
-  <div class="bni active"><span>🏠</span>Start</div>
+  <div class="bni active" onclick="scrollToTop()"><span>🏠</span>Start</div>
   <div class="bni" onclick="openCart()"><span>🛒</span>Warenkorb</div>
   <div class="bni"><span>❤️</span>Favoriten</div>
   <div class="bni"><span>👤</span>Profil</div>
@@ -132,6 +125,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
 
 <script>
 const cuisines = [
+  { id:'alle',      label:'Alle',         emoji:'🍽️' },
   { id:'pizza',     label:'Pizza',        emoji:'🍕' },
   { id:'burger',    label:'Burger',       emoji:'🍔' },
   { id:'sushi',     label:'Sushi',        emoji:'🍱' },
@@ -152,6 +146,119 @@ const courses = [
   { id:'extras',        label:'➕ Extras' },
 ];
 
+const dishPhotos = {
+  // VORSPEISEN
+  'Bruschetta':           'https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=200&q=80',
+  'Caprese':              'https://images.unsplash.com/photo-1592417817038-d13fd7342585?w=200&q=80',
+  'Antipasti Teller':     'https://images.unsplash.com/photo-1541529086526-db283c563270?w=200&q=80',
+  'Burrata':              'https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=200&q=80',
+  'Chicken Wings':        'https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=200&q=80',
+  'Mozzarella Sticks':    'https://images.unsplash.com/photo-1548340748-6d2b7d7da280?w=200&q=80',
+  'Loaded Nachos':        'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=200&q=80',
+  'Edamame':              'https://images.unsplash.com/photo-1563746924237-f81d5c5e3c22?w=200&q=80',
+  'Miso-Suppe':           'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=200&q=80',
+  'Gyoza (6 Stk.)':       'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=200&q=80',
+  'Hummus & Fladenbrot':  'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=200&q=80',
+  'Tzatziki & Pita':      'https://images.unsplash.com/photo-1571167530149-c1105da4f5f6?w=200&q=80',
+  'Taboulé Salat':        'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&q=80',
+  'Samosa (2 Stk.)':      'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80',
+  'Onion Bhaji (4 Stk.)': 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=200&q=80',
+  'Guacamole & Chips':    'https://images.unsplash.com/photo-1600335895229-6e75511892c8?w=200&q=80',
+  'Frühlingsrollen (4)':  'https://images.unsplash.com/photo-1548943487-a2e4e43b4853?w=200&q=80',
+  'Pappadum & Chutneys':  'https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=200&q=80',
+  'Tacos de Queso (3)':   'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=200&q=80',
+  'Vegan Spring Rolls':   'https://images.unsplash.com/photo-1548943487-a2e4e43b4853?w=200&q=80',
+  // HAUPTGERICHTE
+  'Margherita':           'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=200&q=80',
+  'Salami Pizza':         'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=200&q=80',
+  'Quattro Stagioni':     'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200&q=80',
+  'Diavola':              'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=200&q=80',
+  'Calzone':              'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=200&q=80',
+  'Spaghetti Bolognese':  'https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?w=200&q=80',
+  'Classic Smash Burger': 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&q=80',
+  'BBQ Bacon Burger':     'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=200&q=80',
+  'Crispy Chicken Burger':'https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=200&q=80',
+  'Veggie Burger':        'https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=200&q=80',
+  'California Roll (8)':  'https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=200&q=80',
+  'Dragon Roll (8)':      'https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?w=200&q=80',
+  'Rainbow Roll (8)':     'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&q=80',
+  'Nigiri Set (10 Stk.)': 'https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=200&q=80',
+  'Döner im Dürüm':       'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=200&q=80',
+  'Adana Kebab Teller':   'https://images.unsplash.com/photo-1544025162-d76694265947?w=200&q=80',
+  'Pad Thai':             'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=200&q=80',
+  'Butter Chicken':       'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=200&q=80',
+  'Burrito Grande':       'https://images.unsplash.com/photo-1584208124888-4f10ddf48de7?w=200&q=80',
+  'Souvlaki Teller':      'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=200&q=80',
+  'BBQ Ribs (500g)':      'https://images.unsplash.com/photo-1544025162-d76694265947?w=200&q=80',
+  'Vegan Buddha Bowl':    'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&q=80',
+  'Falafel Teller':       'https://images.unsplash.com/photo-1593001872095-7d5b3868fb1d?w=200&q=80',
+  'Tonkotsu Ramen':       'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=200&q=80',
+  'Moussaka':             'https://images.unsplash.com/photo-1600803907087-f56d462fd26b?w=200&q=80',
+  // DESSERTS
+  'Tiramisù':             'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=200&q=80',
+  'Panna Cotta':          'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=200&q=80',
+  'Gelato (2 Kugeln)':    'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=200&q=80',
+  'Brownie mit Eis':      'https://images.unsplash.com/photo-1564355808539-22fda35bed7e?w=200&q=80',
+  'Milkshake Dessert':    'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=200&q=80',
+  'Cheesecake Slice':     'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=200&q=80',
+  'Mochi Eis (3 Stk.)':   'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=200&q=80',
+  'Dorayaki':             'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&q=80',
+  'Baklava (3 Stk.)':     'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=200&q=80',
+  'Gulab Jamun (3 Stk.)': 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80',
+  'Kulfi Mango':          'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=200&q=80',
+  'Churros (5 Stk.)':     'https://images.unsplash.com/photo-1624371414361-e670edf73b65?w=200&q=80',
+  'Mango Klebreis':       'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=200&q=80',
+  'Crème Brûlée':         'https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?w=200&q=80',
+  'Waffel mit Eis':       'https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=200&q=80',
+  'Schokoladen-Fondant':  'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=200&q=80',
+  'Matcha Cheesecake':    'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=200&q=80',
+  'Galaktoboureko':       'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=200&q=80',
+  'Tres Leches':          'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=200&q=80',
+  'Vegan Nice Cream':     'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=200&q=80',
+  // GETRÄNKE
+  'Cola 0,5l':            'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=200&q=80',
+  'Fanta / Sprite 0,5l':  'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=200&q=80',
+  'Wasser still 0,5l':    'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=200&q=80',
+  'Wasser sprudelnd':     'https://images.unsplash.com/photo-1523362628745-0c100150b504?w=200&q=80',
+  'Frischer OJ 0,3l':     'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=200&q=80',
+  'Limonata hausgemacht': 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80',
+  'Chianti 0,25l':        'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80',
+  'Craft Beer 0,33l':     'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80',
+  'Milkshake Vanille':    'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=200&q=80',
+  'Grüner Tee kalt':      'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80',
+  'Sake 0,1l':            'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=200&q=80',
+  'Asahi Bier 0,33l':     'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=200&q=80',
+  'Ayran 0,5l':           'https://images.unsplash.com/photo-1571167530149-c1105da4f5f6?w=200&q=80',
+  'Çay (Türk. Tee)':      'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80',
+  'Mango Lassi 0,3l':     'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=200&q=80',
+  'Masala Chai':          'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=200&q=80',
+  'Horchata 0,4l':        'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=200&q=80',
+  'Ouzo 0,04l':           'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=200&q=80',
+  'Bubble Tea':           'https://images.unsplash.com/photo-1558857563-b371033873b8?w=200&q=80',
+  'Espresso':             'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=200&q=80',
+  // EXTRAS
+  'Extra Mozzarella':     'https://images.unsplash.com/photo-1571167530149-c1105da4f5f6?w=200&q=80',
+  'Extra Salami':         'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=200&q=80',
+  'Knoblauchbrot (2)':    'https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=200&q=80',
+  'Extra Bacon':          'https://images.unsplash.com/photo-1528607929212-2636ec44253e?w=200&q=80',
+  'Extra Käse':           'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=200&q=80',
+  'Avocado Extra':        'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=200&q=80',
+  'Extra Wasabi':         'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=200&q=80',
+  'Sojasoße extra':       'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=200&q=80',
+  'Extra Fladenbrot':     'https://images.unsplash.com/photo-1585537421612-70a008356fbe?w=200&q=80',
+  'Scharfe Soße':         'https://images.unsplash.com/photo-1518110925495-5fe2fda0442c?w=200&q=80',
+  'Extra Naan':           'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80',
+  'Raita':                'https://images.unsplash.com/photo-1571167530149-c1105da4f5f6?w=200&q=80',
+  'Extra Guacamole':      'https://images.unsplash.com/photo-1600335895229-6e75511892c8?w=200&q=80',
+  'Jalapeños extra':      'https://images.unsplash.com/photo-1518110925495-5fe2fda0442c?w=200&q=80',
+  'Dip-Soße':             'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=200&q=80',
+  'Pommes Frites':        'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=200&q=80',
+  'Extra Reis':           'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=200&q=80',
+  'Sesam-Dressing':       'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=200&q=80',
+  'Pita-Brot extra':      'https://images.unsplash.com/photo-1585237421612-70a008356fbe?w=200&q=80',
+  'Extra scharf':         'https://images.unsplash.com/photo-1518110925495-5fe2fda0442c?w=200&q=80',
+};
+
 const allDishes = [
   // VORSPEISEN
   { name:'Bruschetta',           desc:'Röstbrot, Tomaten, Basilikum, Knoblauch',         price:5.90,  emoji:'🍞', cuisine:['pizza','alle'],              course:'vorspeisen' },
@@ -171,7 +278,7 @@ const allDishes = [
   { name:'Onion Bhaji (4 Stk.)', desc:'Knusprige Zwiebelküchlein, Minzchutney',         price:5.50,  emoji:'🧅', cuisine:['indisch','alle'],             course:'vorspeisen' },
   { name:'Guacamole & Chips',    desc:'Avocado, Koriander, Limette, Jalapeño',          price:6.50,  emoji:'🥑', cuisine:['mexiko','alle'],              course:'vorspeisen' },
   { name:'Frühlingsrollen (4)',  desc:'Knusprig frittiert, Süß-Sauer-Dip',              price:5.50,  emoji:'🥢', cuisine:['asiatisch','alle'],           course:'vorspeisen' },
-  { name:'Pappadum & Chutneys', desc:'Linsencracker, Mango- und Minzchutney',           price:3.50,  emoji:'🫓', cuisine:['indisch','alle'],             course:'vorspeisen' },
+  { name:'Pappadum & Chutneys',  desc:'Linsencracker, Mango- und Minzchutney',          price:3.50,  emoji:'🫓', cuisine:['indisch','alle'],             course:'vorspeisen' },
   { name:'Tacos de Queso (3)',   desc:'Corn-Tortilla, Käse, Salsa, Koriander',          price:7.50,  emoji:'🌮', cuisine:['mexiko','alle'],              course:'vorspeisen' },
   { name:'Vegan Spring Rolls',   desc:'Tofu, Gemüse, Reispapier, Erdnussdip',           price:6.90,  emoji:'🌯', cuisine:['vegan','alle'],               course:'vorspeisen' },
 
@@ -189,8 +296,8 @@ const allDishes = [
   { name:'California Roll (8)',  desc:'Avocado, Krebsfleisch, Gurke',                  price:8.90,  emoji:'🌀', cuisine:['sushi','alle'],               course:'hauptgerichte' },
   { name:'Dragon Roll (8)',      desc:'Garnele Tempura, Avocado, Tobiko',              price:13.90, emoji:'🐉', cuisine:['sushi','alle'],               course:'hauptgerichte' },
   { name:'Rainbow Roll (8)',     desc:'5 Fischsorten, bunt glasiert',                  price:14.90, emoji:'🌈', cuisine:['sushi','alle'],               course:'hauptgerichte' },
-  { name:'Nigiri Set (10 Stk.)', desc:'Lachs, Thunfisch, Garnele, Hamachi, Ebi',       price:17.90, emoji:'🍣', cuisine:['sushi','alle'],               course:'hauptgerichte' },
-  { name:'Döner im Dürüm',      desc:'Rindfleisch, Salat, Tomaten, Kräutersoße',      price:8.50,  emoji:'🌯', cuisine:['döner','alle'],               course:'hauptgerichte' },
+  { name:'Nigiri Set (10 Stk.)',  desc:'Lachs, Thunfisch, Garnele, Hamachi, Ebi',       price:17.90, emoji:'🍣', cuisine:['sushi','alle'],               course:'hauptgerichte' },
+  { name:'Döner im Dürüm',       desc:'Rindfleisch, Salat, Tomaten, Kräutersoße',      price:8.50,  emoji:'🌯', cuisine:['döner','alle'],               course:'hauptgerichte' },
   { name:'Adana Kebab Teller',   desc:'Scharfes Lammhack am Spieß, Reis, Salat',      price:13.90, emoji:'🍢', cuisine:['döner','griechisch','alle'],  course:'hauptgerichte' },
   { name:'Pad Thai',             desc:'Reisnudeln, Ei, Erdnüsse, Tamarinde',           price:11.90, emoji:'🍜', cuisine:['asiatisch','alle'],           course:'hauptgerichte' },
   { name:'Butter Chicken',       desc:'Hähnchen in cremiger Tomatencurrysoße',         price:13.90, emoji:'🍛', cuisine:['indisch','alle'],             course:'hauptgerichte' },
@@ -207,7 +314,7 @@ const allDishes = [
   { name:'Panna Cotta',          desc:'Mit Beerencoulis',                               price:4.90,  emoji:'🍮', cuisine:['pizza','alle'],              course:'desserts' },
   { name:'Gelato (2 Kugeln)',    desc:'Vanille, Schokolade, Pistazie oder Erdbeer',    price:3.90,  emoji:'🍦', cuisine:['pizza','alle'],              course:'desserts' },
   { name:'Brownie mit Eis',      desc:'Warmer Schokoladenbrownie, Vanilleeis',         price:5.90,  emoji:'🍫', cuisine:['burger','american','alle'],   course:'desserts' },
-  { name:'Milkshake',            desc:'Vanille, Erdbeer oder Schokolade, 300 ml',      price:4.90,  emoji:'🥤', cuisine:['burger','american','alle'],   course:'desserts' },
+  { name:'Milkshake Dessert',    desc:'Vanille, Erdbeer oder Schokolade, 300 ml',      price:4.90,  emoji:'🥤', cuisine:['burger','american','alle'],   course:'desserts' },
   { name:'Cheesecake Slice',     desc:'New York Style, Beerentopping',                 price:4.50,  emoji:'🍰', cuisine:['burger','american','alle'],   course:'desserts' },
   { name:'Mochi Eis (3 Stk.)',   desc:'Matcha, Mango oder Erdbeere',                   price:5.90,  emoji:'🍡', cuisine:['sushi','asiatisch','alle'],   course:'desserts' },
   { name:'Dorayaki',             desc:'Japanische Pfannkuchen, Anko-Füllung',          price:4.50,  emoji:'🥞', cuisine:['sushi','asiatisch','alle'],   course:'desserts' },
@@ -252,7 +359,7 @@ const allDishes = [
   { name:'Knoblauchbrot (2)',    desc:'Mit Butter',                                    price:2.50,  emoji:'🍞', cuisine:['pizza','alle'],  course:'extras' },
   { name:'Extra Bacon',          desc:'2 Streifen',                                    price:1.50,  emoji:'🥓', cuisine:['burger','american','alle'],  course:'extras' },
   { name:'Extra Käse',           desc:'Cheddar oder Gruyère',                         price:1.00,  emoji:'🧀', cuisine:['burger','alle'],  course:'extras' },
-  { name:'Avocado',              desc:'Frische Scheiben',                              price:1.50,  emoji:'🥑', cuisine:['burger','vegan','alle'],  course:'extras' },
+  { name:'Avocado Extra',        desc:'Frische Scheiben',                              price:1.50,  emoji:'🥑', cuisine:['burger','vegan','alle'],  course:'extras' },
   { name:'Extra Wasabi',         desc:'',                                              price:0.50,  emoji:'🌿', cuisine:['sushi','alle'],  course:'extras' },
   { name:'Sojasoße extra',       desc:'Normal oder Low Sodium',                        price:0.50,  emoji:'🫙', cuisine:['sushi','asiatisch','alle'],  course:'extras' },
   { name:'Extra Fladenbrot',     desc:'',                                              price:1.00,  emoji:'🫓', cuisine:['döner','griechisch','alle'],  course:'extras' },
@@ -263,7 +370,7 @@ const allDishes = [
   { name:'Jalapeños extra',      desc:'',                                              price:0.80,  emoji:'🌶️', cuisine:['mexiko','burger','alle'],  course:'extras' },
   { name:'Dip-Soße',             desc:'BBQ, Ranch, Knoblauch oder Ketchup',            price:0.80,  emoji:'🫙', cuisine:['burger','american','alle'],  course:'extras' },
   { name:'Pommes Frites',        desc:'Portion',                                       price:3.90,  emoji:'🍟', cuisine:['burger','american','alle'],  course:'extras' },
-  { name:'Extra Reis (Portion)', desc:'Basmati oder Jasminreis',                       price:2.00,  emoji:'🍚', cuisine:['asiatisch','indisch','alle'],  course:'extras' },
+  { name:'Extra Reis',           desc:'Basmati oder Jasminreis',                       price:2.00,  emoji:'🍚', cuisine:['asiatisch','indisch','alle'],  course:'extras' },
   { name:'Sesam-Dressing',       desc:'',                                              price:1.00,  emoji:'🫙', cuisine:['sushi','asiatisch','alle'],  course:'extras' },
   { name:'Pita-Brot extra',      desc:'2 Stück',                                       price:1.50,  emoji:'🫓', cuisine:['griechisch','döner','alle'],  course:'extras' },
   { name:'Extra scharf',         desc:'Auf Wunsch – kostenfrei',                       price:0.00,  emoji:'🔥', cuisine:['alle'],  course:'extras' },
@@ -273,10 +380,15 @@ let activeCuisine = 'alle';
 let activeCourse  = 'hauptgerichte';
 let cart = [];
 
+// Safe name for use as data attribute
+function safeName(name) {
+  return encodeURIComponent(name);
+}
+
 function buildCuisineRow() {
   document.getElementById('cuisineScroll').innerHTML = cuisines.map(c => `
-    <div class="cuisine-btn" onclick="setCuisine('${c.id}')">
-      <div class="cuisine-icon ${c.id===activeCuisine?'active':''}" id="ci-${c.id}">${c.emoji}</div>
+    <div class="cuisine-btn" id="cb-${c.id}" onclick="setCuisine('${c.id}')">
+      <div class="cuisine-icon ${c.id === activeCuisine ? 'active' : ''}">${c.emoji}</div>
       <div class="cuisine-lbl">${c.label}</div>
     </div>
   `).join('');
@@ -284,22 +396,59 @@ function buildCuisineRow() {
 
 function buildCourseRow() {
   document.getElementById('courseRow').innerHTML = courses.map(c => `
-    <div class="course-chip ${c.id===activeCourse?'active':''}" id="cc-${c.id}" onclick="setCourse('${c.id}')">${c.label}</div>
+    <div class="course-chip ${c.id === activeCourse ? 'active' : ''}" id="cc-${c.id}" onclick="setCourse('${c.id}')">${c.label}</div>
   `).join('');
 }
 
 function setCuisine(id) {
   activeCuisine = id;
-  document.querySelectorAll('.cuisine-icon').forEach(el => el.classList.remove('active'));
-  document.getElementById('ci-' + id).classList.add('active');
+  // Update active state on cuisine buttons
+  document.querySelectorAll('.cuisine-btn').forEach(btn => {
+    btn.querySelector('.cuisine-icon').classList.remove('active');
+  });
+  const activeBtn = document.getElementById('cb-' + id);
+  if (activeBtn) activeBtn.querySelector('.cuisine-icon').classList.add('active');
   renderDishes();
 }
 
 function setCourse(id) {
   activeCourse = id;
   document.querySelectorAll('.course-chip').forEach(el => el.classList.remove('active'));
-  document.getElementById('cc-' + id).classList.add('active');
+  const chip = document.getElementById('cc-' + id);
+  if (chip) chip.classList.add('active');
   renderDishes();
+}
+
+function getLockedCuisines() {
+  // Returns set of cuisine IDs that ARE allowed based on cart contents
+  if (cart.length === 0) return null; // null means no lock
+  const allowed = new Set(['alle']);
+  cart.forEach(item => {
+    const dish = allDishes.find(d => d.name === item.name);
+    if (dish) dish.cuisine.forEach(c => allowed.add(c));
+  });
+  return allowed;
+}
+
+function updateCuisineLock() {
+  const allowed = getLockedCuisines();
+  cuisines.forEach(c => {
+    const btn = document.getElementById('cb-' + c.id);
+    if (!btn) return;
+    if (!allowed) {
+      btn.classList.remove('locked');
+    } else {
+      if (allowed.has(c.id)) {
+        btn.classList.remove('locked');
+      } else {
+        btn.classList.add('locked');
+        // If active cuisine gets locked, switch to 'alle'
+        if (activeCuisine === c.id) {
+          setCuisine('alle');
+        }
+      }
+    }
+  });
 }
 
 function renderDishes() {
@@ -307,16 +456,26 @@ function renderDishes() {
   const dishes = allDishes.filter(d => {
     const matchCuisine = activeCuisine === 'alle' || d.cuisine.includes(activeCuisine);
     const matchCourse  = d.course === activeCourse;
-    const matchSearch  = !search || d.name.toLowerCase().includes(search) || d.desc.toLowerCase().includes(search);
+    const matchSearch  = !search ||
+      d.name.toLowerCase().includes(search) ||
+      d.desc.toLowerCase().includes(search);
     return matchCuisine && matchCourse && matchSearch;
   });
-  const courseLabel  = courses.find(c => c.id === activeCourse).label;
-  const cuisineLabel = cuisines.find(c => c.id === activeCuisine).label;
+
+  const courseObj  = courses.find(c => c.id === activeCourse);
+  const cuisineObj = cuisines.find(c => c.id === activeCuisine);
+  const courseLabel  = courseObj  ? courseObj.label  : '';
+  const cuisineLabel = cuisineObj ? cuisineObj.label : '';
+
   const content = document.getElementById('mainContent');
   if (dishes.length === 0) {
-    content.innerHTML = `<div style="text-align:center;padding:50px 20px;color:#ccc"><div style="font-size:52px">🍽️</div><p style="margin-top:14px;font-size:15px;font-weight:700">Keine Gerichte gefunden</p></div>`;
+    content.innerHTML = `<div style="text-align:center;padding:50px 20px;color:#ccc">
+      <div style="font-size:52px">🍽️</div>
+      <p style="margin-top:14px;font-size:15px;font-weight:700">Keine Gerichte gefunden</p>
+    </div>`;
     return;
   }
+
   content.innerHTML = `
     <div class="dish-section">
       <h4>${courseLabel} &middot; ${cuisineLabel === 'Alle' ? 'Alle Küchen' : cuisineLabel}</h4>
@@ -324,67 +483,49 @@ function renderDishes() {
         <div class="dish-card">
           <div class="dish-emoji">${d.emoji}</div>
           <div class="dish-info">
-            <div class="dish-name">${d.name}</div>
-            ${d.desc ? `<div class="dish-desc">${d.desc}</div>` : ''}
-            <div class="dish-price">${d.price === 0 ? 'Gratis' : d.price.toFixed(2).replace('.',',') + ' \u20ac'}</div>
+            <div class="dish-name">${escapeHtml(d.name)}</div>
+            ${d.desc ? `<div class="dish-desc">${escapeHtml(d.desc)}</div>` : ''}
+            <div class="dish-price">${d.price === 0 ? 'Gratis' : formatPrice(d.price) + '\u00a0€'}</div>
           </div>
-          <button class="add-dish-btn" onclick="addToCart('${d.name.replace(/'/g,"\\'").replace(/"/g,'&quot;')}', ${d.price}, '${d.emoji}')">+</button>
+          <button class="add-dish-btn" onclick="addToCart('${safeName(d.name)}', ${d.price}, '${d.emoji}')">+</button>
         </div>
       `).join('')}
     </div>
   `;
 }
 
-function applyFilters() { renderDishes(); }
-
-function getCartCuisine() {
-  if (cart.length === 0) return null;
-  // find the cuisine of the first cart item
-  const firstItem = cart[0];
-  const d = allDishes.find(x => x.name === firstItem.name);
-  if (!d) return null;
-  // return the most specific cuisine (not 'alle')
-  return d.cuisine.find(c => c !== 'alle') || null;
+function escapeHtml(str) {
+  return str
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
 }
 
-function updateCuisineLock() {
-  const locked = getCartCuisine();
-  cuisines.forEach(c => {
-    const icon = document.getElementById('ci-' + c.id);
-    const lbl = icon ? icon.closest('.cuisine-btn').querySelector('.cuisine-lbl') : null;
-    if (!icon) return;
-    if (!locked) {
-      icon.classList.remove('locked');
-      icon.closest('.cuisine-btn').style.pointerEvents = '';
-      if (lbl) lbl.classList.remove('locked');
-    } else {
-      // check if this cuisine matches the locked one
-      const matches = allDishes.some(d => d.cuisine.includes(locked) && d.cuisine.includes(c.id));
-      const isAllowed = c.id === locked || matches || c.id === 'alle';
-      if (!isAllowed) {
-        icon.classList.add('locked');
-        icon.closest('.cuisine-btn').style.pointerEvents = 'none';
-        if (lbl) lbl.classList.add('locked');
-      } else {
-        icon.classList.remove('locked');
-        icon.closest('.cuisine-btn').style.pointerEvents = '';
-        if (lbl) lbl.classList.remove('locked');
-      }
-    }
-  });
+function formatPrice(p) {
+  return p.toFixed(2).replace('.', ',');
 }
 
-function addToCart(name, price, emoji) {
+function applyFilters() {
+  renderDishes();
+}
+
+function addToCart(encodedName, price, emoji) {
+  const name = decodeURIComponent(encodedName);
   const ex = cart.find(i => i.name === name);
-  if (ex) ex.qty++;
-  else cart.push({ name, price, emoji, qty:1 });
+  if (ex) {
+    ex.qty++;
+  } else {
+    cart.push({ name, price, emoji, qty: 1 });
+  }
   updateCartCount();
   updateCuisineLock();
-  showToast('\u2705 ' + name + ' hinzugefügt');
+  showToast('✅ ' + name + ' hinzugefügt');
 }
 
 function updateCartCount() {
-  document.getElementById('cartCount').textContent = cart.reduce((s,i) => s+i.qty, 0);
+  document.getElementById('cartCount').textContent = cart.reduce((s, i) => s + i.qty, 0);
 }
 
 function openCart() {
@@ -401,37 +542,41 @@ function closeCart() {
 function renderCart() {
   const el = document.getElementById('cartItems');
   const ft = document.getElementById('cartFoot');
+
   if (cart.length === 0) {
     el.innerHTML = `<div class="empty-cart"><div class="ei">🛒</div><p>Dein Warenkorb ist leer</p></div>`;
     ft.innerHTML = '';
     return;
   }
-  el.innerHTML = cart.map((item,i) => `
+
+  el.innerHTML = cart.map((item, i) => `
     <div class="ci">
       <span style="font-size:26px">${item.emoji}</span>
-      <div class="ci-name">${item.name}</div>
+      <div class="ci-name">${escapeHtml(item.name)}</div>
       <div class="qty-ctrl">
-        <button class="qb" onclick="changeQty(${i},-1)">\u2212</button>
+        <button class="qb" onclick="changeQty(${i}, -1)">−</button>
         <span class="qn">${item.qty}</span>
-        <button class="qb" onclick="changeQty(${i},1)">+</button>
+        <button class="qb" onclick="changeQty(${i}, 1)">+</button>
       </div>
-      <div class="ci-price">${(item.price*item.qty).toFixed(2).replace('.',',')} \u20ac</div>
+      <div class="ci-price">${formatPrice(item.price * item.qty)}&nbsp;€</div>
     </div>
   `).join('');
-  const sub = cart.reduce((s,i) => s+i.price*i.qty, 0);
+
+  const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
   const del = sub >= 15 ? 0 : 1.99;
   const tot = sub + del;
+
   ft.innerHTML = `
-    <div class="tr"><span>Zwischensumme</span><span>${sub.toFixed(2).replace('.',',')} \u20ac</span></div>
-    <div class="tr"><span>Liefergebühr</span><span>${del===0?'Gratis':del.toFixed(2).replace('.',',')+' \u20ac'}</span></div>
-    <div class="tr fin"><span>Gesamt</span><span>${tot.toFixed(2).replace('.',',')} \u20ac</span></div>
-    <button class="order-btn" onclick="placeOrder()">🛵 Jetzt bestellen \u2013 ${tot.toFixed(2).replace('.',',')} \u20ac</button>
+    <div class="tr"><span>Zwischensumme</span><span>${formatPrice(sub)}&nbsp;€</span></div>
+    <div class="tr"><span>Liefergebühr</span><span>${del === 0 ? 'Gratis' : formatPrice(del) + '&nbsp;€'}</span></div>
+    <div class="tr fin"><span>Gesamt</span><span>${formatPrice(tot)}&nbsp;€</span></div>
+    <button class="order-btn" onclick="placeOrder()">🛵 Jetzt bestellen – ${formatPrice(tot)}&nbsp;€</button>
   `;
 }
 
 function changeQty(i, delta) {
   cart[i].qty += delta;
-  if (cart[i].qty <= 0) cart.splice(i,1);
+  if (cart[i].qty <= 0) cart.splice(i, 1);
   updateCartCount();
   updateCuisineLock();
   renderCart();
@@ -449,9 +594,15 @@ function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2400);
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2400);
 }
 
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Init
 buildCuisineRow();
 buildCourseRow();
 renderDishes();
