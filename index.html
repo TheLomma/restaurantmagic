@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurant.de</title>
+  <!-- PWA / Homescreen -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ff8000">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-touch-icon-152.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/icons/apple-touch-icon-167.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Restaurant.de">
+  <meta name="mobile-web-app-capable" content="yes">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; padding-bottom: 70px; }
+
+  .header { background: #ff8000; padding: 16px; position: sticky; top: 0; z-index: 100; }
+  .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .logo { color: white; font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+  .logo span { color: #ffe066; }
+  .header-icons { display: flex; gap: 12px; }
+  .header-icons button { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
+  .address-bar { background: white; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; font-size: 14px; color: #333; }
+  .address-text { flex: 1; font-weight: 600; }
+  .address-change { color: #ff8000; font-weight: 700; font-size: 13px; }
+  .search-bar { margin: 8px 0 0; background: white; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; }
+  .search-bar input { border: none; outline: none; flex: 1; font-size: 14px; }
+
+  .categories { background: white; padding: 16px 16px 8px; }
+  .section-title { font-size: 18px; font-weight: 800; margin-bottom: 12px; color: #1a1a1a; }
+  .cat-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; }
+  .cat-scroll::-webkit-scrollbar { display: none; }
+  .cat-item { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 65px; cursor: pointer; }
+  .cat-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; background: #fff4e6; border: 2px solid transparent; transition: all 0.2s; }
+  .cat-icon.active { border-color: #ff8000; background: #ffe8cc; }
+  .cat-label { font-size: 11px; font-weight: 600; color: #555; text-align: center; }
+
+  .filters { padding: 12px 16px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .filters::-webkit-scrollbar { display: none; }
+  .filter-chip { padding: 7px 14px; border-radius: 20px; border: 1.5px solid #ddd; background: white; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: all 0.2s; color: #444; }
+  .filter-chip.active { background: #ff8000; border-color: #ff8000; color: white; }
+
+  .banner { margin: 0 16px 16px; background: linear-gradient(135deg, #ff8000, #ff5500); border-radius: 16px; padding: 20px; color: white; position: relative; overflow: hidden; }
+  .banner h2 { font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+  .banner p { font-size: 13px; opacity: 0.9; }
+  .banner-emoji { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 50px; }
+
+  .restaurants { padding: 0 16px; }
+  .restaurant-card { background: white; border-radius: 16px; margin-bottom: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer; transition: transform 0.2s; }
+  .restaurant-card:active { transform: scale(0.98); }
+  .card-image { height: 150px; display: flex; align-items: center; justify-content: center; font-size: 60px; position: relative; }
+  .card-badge { position: absolute; top: 10px; left: 10px; background: #ff8000; color: white; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .card-fav { position: absolute; top: 10px; right: 10px; background: white; border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+  .card-body { padding: 14px; }
+  .card-name { font-size: 17px; font-weight: 800; color: #1a1a1a; margin-bottom: 4px; }
+  .card-tags { font-size: 12px; color: #888; margin-bottom: 10px; }
+  .card-meta { display: flex; gap: 16px; }
+  .meta-item { display: flex; align-items: center; gap: 4px; font-size: 12px; color: #555; font-weight: 600; }
+  .card-rating { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 6px; font-size: 13px; font-weight: 800; }
+
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 200; }
+  .modal { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: white; border-radius: 24px 24px 0 0; max-height: 88vh; overflow-y: auto; z-index: 201; }
+  .modal-header { padding: 16px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: white; z-index: 1; display: flex; align-items: center; gap: 12px; }
+  .modal-emoji { font-size: 36px; }
+  .modal-title { font-size: 20px; font-weight: 800; }
+  .modal-sub { font-size: 13px; color: #888; }
+  .modal-close { margin-left: auto; background: #f5f5f5; border: none; width: 34px; height: 34px; border-radius: 50%; font-size: 18px; cursor: pointer; flex-shrink: 0; }
+
+  /* Sticky category nav inside menu */
+  .menu-cat-nav { position: sticky; top: 77px; background: white; z-index: 5; display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px; border-bottom: 1px solid #f0f0f0; scrollbar-width: none; }
+  .menu-cat-nav::-webkit-scrollbar { display: none; }
+  .menu-cat-pill { white-space: nowrap; padding: 5px 12px; border-radius: 16px; border: 1.5px solid #ddd; font-size: 12px; font-weight: 700; cursor: pointer; background: white; color: #555; transition: all 0.2s; }
+  .menu-cat-pill.active { background: #ff8000; border-color: #ff8000; color: white; }
+
+  .menu-category { padding: 16px 16px 4px; font-size: 16px; font-weight: 800; color: #1a1a1a; border-top: 6px solid #f5f5f5; margin-top: 4px; }
+  .menu-item { display: flex; align-items: flex-start; padding: 12px 16px; gap: 12px; border-bottom: 1px solid #f9f9f9; }
+  .menu-item:hover { background: #fff8f2; }
+  .menu-item-info { flex: 1; }
+  .menu-item-name { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+  .menu-item-desc { font-size: 12px; color: #999; margin: 3px 0 6px; line-height: 1.4; }
+  .menu-item-price { font-size: 15px; font-weight: 800; color: #ff8000; }
+  .menu-item-img { font-size: 34px; width: 46px; text-align: center; flex-shrink: 0; }
+  .add-btn { background: #ff8000; color: white; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .add-btn:hover { background: #e67000; }
+
+  .cart-modal { display: none; position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: white; border-radius: 24px 24px 0 0; max-height: 80vh; overflow-y: auto; z-index: 201; }
+  .cart-item { display: flex; align-items: center; padding: 12px 16px; gap: 12px; border-bottom: 1px solid #f5f5f5; }
+  .cart-item-name { flex: 1; font-size: 14px; font-weight: 600; }
+  .cart-qty { display: flex; align-items: center; gap: 8px; }
+  .qty-btn { background: #f5f5f5; border: none; width: 28px; height: 28px; border-radius: 50%; font-size: 16px; cursor: pointer; font-weight: 700; }
+  .qty-num { font-weight: 800; min-width: 20px; text-align: center; }
+  .cart-price { font-size: 14px; font-weight: 700; color: #ff8000; min-width: 55px; text-align: right; }
+  .cart-total { padding: 16px; background: #f9f9f9; border-top: 2px solid #f0f0f0; }
+  .total-row { display: flex; justify-content: space-between; font-size: 14px; color: #666; margin-bottom: 6px; }
+  .total-row.final { font-size: 17px; font-weight: 800; color: #1a1a1a; margin-top: 8px; }
+  .order-btn { width: 100%; padding: 16px; background: #ff8000; color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 12px; }
+  .order-btn:hover { background: #e67000; }
+
+  .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-around; padding: 10px 0 16px; z-index: 150; }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; flex: 1; }
+  .nav-icon { font-size: 22px; position: relative; }
+  .nav-label { font-size: 10px; font-weight: 600; color: #aaa; }
+  .nav-item.active .nav-label { color: #ff8000; }
+  .cart-badge { position: absolute; top: -4px; right: -8px; background: #ff8000; color: white; font-size: 9px; font-weight: 800; width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #1a1a1a; color: white; padding: 12px 24px; border-radius: 30px; font-size: 13px; font-weight: 600; z-index: 500; opacity: 0; transition: opacity 0.3s; white-space: nowrap; }
+  .toast.show { opacity: 1; }
+  .empty-cart { text-align: center; padding: 40px 20px; color: #bbb; }
+  .empty-cart .big { font-size: 50px; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="logo">Restaurant<span>.de</span></div>
+    <div class="header-icons">
+      <button>🔔</button>
+      <button>👤</button>
+    </div>
+  </div>
+  <div class="address-bar">
+    <span>📍</span>
+    <span class="address-text">Düsseldorf, Königsallee 1</span>
+    <span class="address-change">Ändern</span>
+  </div>
+  <div class="search-bar">
+    <span>🔍</span>
+    <input type="text" id="searchInput" placeholder="Restaurant oder Gericht suchen…" oninput="filterRestaurants()">
+  </div>
+</div>
+
+<div id="mainContent">
+  <div class="categories">
+    <div class="section-title">Was möchtest du essen?</div>
+    <div class="cat-scroll">
+      <div class="cat-item" onclick="filterCategory('alle')"><div class="cat-icon active" id="cat-alle">🍽️</div><div class="cat-label">Alle</div></div>
+      <div class="cat-item" onclick="filterCategory('pizza')"><div class="cat-icon" id="cat-pizza">🍕</div><div class="cat-label">Pizza</div></div>
+      <div class="cat-item" onclick="filterCategory('burger')"><div class="cat-icon" id="cat-burger">🍔</div><div class="cat-label">Burger</div></div>
+      <div class="cat-item" onclick="filterCategory('sushi')"><div class="cat-icon" id="cat-sushi">🍱</div><div class="cat-label">Sushi</div></div>
+      <div class="cat-item" onclick="filterCategory('döner')"><div class="cat-icon" id="cat-döner">🌯</div><div class="cat-label">Döner</div></div>
+      <div class="cat-item" onclick="filterCategory('asiatisch')"><div class="cat-icon" id="cat-asiatisch">🍜</div><div class="cat-label">Asiatisch</div></div>
+      <div class="cat-item" onclick="filterCategory('indisch')"><div class="cat-icon" id="cat-indisch">🍛</div><div class="cat-label">Indisch</div></div>
+    </div>
+  </div>
+  <div class="filters">
+    <div class="filter-chip active" onclick="toggleFilter(this, 'alle')">Alle</div>
+    <div class="filter-chip" onclick="toggleFilter(this, 'schnell')">⚡ Schnell</div>
+    <div class="filter-chip" onclick="toggleFilter(this, 'gratis')">🆓 Gratis Lieferung</div>
+    <div class="filter-chip" onclick="toggleFilter(this, 'top')">⭐ Top bewertet</div>
+    <div class="filter-chip" onclick="toggleFilter(this, 'neu')">🆕 Neu</div>
+    <div class="filter-chip" onclick="toggleFilter(this, 'veg')">🌱 Vegetarisch</div>
+  </div>
+  <div class="banner">
+    <h2>Heute 20% Rabatt! 🎉</h2>
+    <p>Auf alle Bestellungen ab 15 €</p>
+    <div class="banner-emoji">🛵</div>
+  </div>
+  <div class="restaurants" id="restaurantList"></div>
+</div>
+
+<div class="modal-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="modal" id="menuModal">
+  <div class="modal-header">
+    <div class="modal-emoji" id="modalEmoji"></div>
+    <div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-sub" id="modalSub"></div>
+    </div>
+    <button class="modal-close" onclick="closeMenu()">✕</button>
+  </div>
+  <div class="menu-cat-nav" id="menuCatNav"></div>
+  <div id="menuContent"></div>
+</div>
+
+<div class="modal-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-modal" id="cartModal">
+  <div class="modal-header">
+    <div class="modal-emoji">🛒</div>
+    <div>
+      <div class="modal-title">Warenkorb</div>
+      <div class="modal-sub" id="cartRestName"></div>
+    </div>
+    <button class="modal-close" onclick="closeCart()">✕</button>
+  </div>
+  <div id="cartItems"></div>
+  <div class="cart-total" id="cartTotal"></div>
+</div>
+
+<div class="bottom-nav">
+  <div class="nav-item active"><div class="nav-icon">🏠</div><div class="nav-label">Start</div></div>
+  <div class="nav-item" onclick="openCart()">
+    <div class="nav-icon">🛒<div class="cart-badge" id="cartBadge" style="display:none">0</div></div>
+    <div class="nav-label">Warenkorb</div>
+  </div>
+  <div class="nav-item"><div class="nav-icon">❤️</div><div class="nav-label">Favoriten</div></div>
+  <div class="nav-item"><div class="nav-icon">👤</div><div class="nav-label">Profil</div></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const restaurants = [
+  {
+    id: 1, name: "Bella Pizza", emoji: "🍕", bg: "#fff4e6",
+    tags: ["Pizza", "Pasta", "Italienisch"], rating: 4.7, time: "25–35 Min", delivery: "1,99 €",
+    badges: ["Top bewertet"], category: "pizza", filters: ["top"],
+    menu: [
+      { cat: "🥗 Vorspeisen", items: [
+        { name: "Bruschetta (3 Stk.)", desc: "Röstbrot, Tomaten, Basilikum, Knoblauch", price: 5.90, emoji: "🍞" },
+        { name: "Caprese", desc: "Mozzarella, Tomaten, Basilikum, Olivenöl", price: 6.90, emoji: "🧀" },
+        { name: "Antipasti Teller", desc: "Gegrilltes Gemüse, Oliven, Aufschnitt", price: 8.90, emoji: "🫒" },
+        { name: "Zuppa del Giorno", desc: "Tagessuppe – heute Minestrone", price: 4.90, emoji: "🍲" },
+        { name: "Burrata mit Pesto", desc: "Cremige Burrata, Basilikumpesto, Cherrytomaten", price: 9.90, emoji: "🧀" },
+      ]},
+      { cat: "🍕 Pizzen", items: [
+        { name: "Margherita", desc: "Tomatensoße, Mozzarella, Basilikum", price: 8.90, emoji: "🍕" },
+        { name: "Salami", desc: "Tomatensoße, Mozzarella, Mailänder Salami", price: 10.90, emoji: "🍕" },
+        { name: "Prosciutto e Funghi", desc: "Schinken, Champignons, Mozzarella", price: 11.50, emoji: "🍕" },
+        { name: "Quattro Stagioni", desc: "Schinken, Artischocken, Oliven, Champignons", price: 12.90, emoji: "🍕" },
+        { name: "Diavola", desc: "Scharfe Salami, Jalapeños, Chilioil", price: 12.50, emoji: "🌶️" },
+        { name: "Vegetariana", desc: "Gegrilltes Gemüse, Pesto, Mozzarella", price: 11.90, emoji: "🌿" },
+        { name: "Tonno e Cipolla", desc: "Thunfisch, rote Zwiebeln, Kapern", price: 12.90, emoji: "🐟" },
+        { name: "Calzone Classica", desc: "Gefüllt mit Ricotta, Schinken, Mozzarella", price: 13.50, emoji: "🥟" },
+        { name: "Bufala", desc: "Büffelmozzarella, Rucola, Parmaschinken", price: 14.90, emoji: "🍕" },
+        { name: "Tartufo", desc: "Trüffelcreme, Steinpilze, Parmesan", price: 15.90, emoji: "🍄" },
+      ]},
+      { cat: "🍝 Pasta", items: [
+        { name: "Spaghetti Bolognese", desc: "Klassische Hackfleischsoße, Parmesan", price: 9.90, emoji: "🍝" },
+        { name: "Penne Arrabiata", desc: "Scharfe Tomatensoße, vegan", price: 8.90, emoji: "🌶️" },
+        { name: "Tagliatelle al Tartufo", desc: "Trüffelcreme, Parmesan, schwarzer Trüffel", price: 15.90, emoji: "🍝" },
+        { name: "Linguine alle Vongole", desc: "Venusmuscheln, Weißwein, Knoblauch", price: 16.90, emoji: "🦪" },
+        { name: "Gnocchi al Gorgonzola", desc: "Hausgemachte Gnocchi, Gorgonzola-Sahnesoße", price: 12.90, emoji: "🍝" },
+      ]},
+      { cat: "🍰 Nachspeisen", items: [
+        { name: "Tiramisù", desc: "Klassisches Rezept mit Mascarpone", price: 5.90, emoji: "🍰" },
+        { name: "Panna Cotta", desc: "Mit Beerencoulis", price: 4.90, emoji: "🍮" },
+        { name: "Gelato (2 Kugeln)", desc: "Wahl aus Vanille, Schokolade, Pistazie, Erdbeer", price: 3.90, emoji: "🍦" },
+        { name: "Cannoli Siciliani", desc: "Ricottafüllung, kandierte Zitrone, Pistazie", price: 5.50, emoji: "🧁" },
+      ]},
+      { cat: "🥤 Getränke", items: [
+        { name: "Cola / Fanta / Sprite 0,4l", desc: "", price: 2.80, emoji: "🥤" },
+        { name: "Wasser still/sprudelnd 0,5l", desc: "", price: 1.90, emoji: "💧" },
+        { name: "Limonata hausgemacht", desc: "Frische Zitrone, Minze, Zucker", price: 3.90, emoji: "🍋" },
+        { name: "Chianti Classico 0,25l", desc: "Toskanischer Rotwein", price: 6.90, emoji: "🍷" },
+        { name: "Prosecco 0,2l", desc: "Trocken, frisch", price: 5.90, emoji: "🥂" },
+        { name: "Espresso", desc: "", price: 1.90, emoji: "☕" },
+      ]},
+      { cat: "➕ Extras", items: [
+        { name: "Extra Mozzarella", desc: "", price: 1.50, emoji: "🧀" },
+        { name: "Extra Salami", desc: "", price: 1.50, emoji: "🍖" },
+        { name: "Knoblauchbrot (2 Stk.)", desc: "", price: 2.50, emoji: "🍞" },
+        { name: "Chili-Olivenöl", desc: "Kleine Flasche", price: 1.00, emoji: "🌶️" },
+        { name: "Dip-Soße", desc: "Knoblauch, BBQ oder Kräuter", price: 0.80, emoji: "🫙" },
+      ]},
+    ]
+  },
+  {
+    id: 2, name: "Burger House", emoji: "🍔", bg: "#e8f5e9",
+    tags: ["Burger", "Pommes", "American"], rating: 4.5, time: "20–30 Min", delivery: "Gratis",
+    badges: ["Gratis Lieferung"], category: "burger", filters: ["gratis", "schnell"],
+    menu: [
+      { cat: "🧀 Vorspeisen & Snacks", items: [
+        { name: "Mozzarella Sticks (6 Stk.)", desc: "Mit Marinara-Dip", price: 5.90, emoji: "🧀" },
+        { name: "Chicken Wings (6 Stk.)", desc: "BBQ oder Hot Buffalo Sauce", price: 7.90, emoji: "🍗" },
+        { name: "Loaded Nachos", desc: "Käse, Jalapeños, Sauerrahm, Guacamole", price: 8.50, emoji: "🌮" },
+        { name: "Mini Corn Dogs (4 Stk.)", desc: "Mit Senf-Honig-Dip", price: 5.50, emoji: "🌭" },
+        { name: "Crispy Calamari", desc: "Mit Aioli", price: 7.50, emoji: "🦑" },
+      ]},
+      { cat: "🍔 Burger", items: [
+        { name: "Classic Smash Burger", desc: "Rindfleisch, Salat, Tomate, Zwiebeln, Senf", price: 9.90, emoji: "🍔" },
+        { name: "BBQ Bacon Burger", desc: "Bacon, Cheddar, BBQ-Soße, Crispy Onions", price: 12.90, emoji: "🥓" },
+        { name: "Truffle Mushroom Burger", desc: "Champignons, Trüffelmayo, Gruyère", price: 13.90, emoji: "🍄" },
+        { name: "Chili Cheese Burger", desc: "Chili con Carne, Cheddar, Jalapeños", price: 12.50, emoji: "🌶️" },
+        { name: "Crispy Chicken Burger", desc: "Paniertes Hähnchen, Coleslaw, Pickle", price: 11.90, emoji: "🍗" },
+        { name: "Veggie Burger", desc: "Schwarze Bohnen Pattie, Avocado, Sprossen", price: 10.90, emoji: "🌿" },
+        { name: "Double Smash", desc: "2× Pattie, Spezialsoße, Doppelkäse", price: 14.90, emoji: "🍔" },
+        { name: "Fish Burger", desc: "Gebratener Kabeljau, Remoulade, Salat", price: 11.50, emoji: "🐟" },
+        { name: "Korean Fried Chicken Burger", desc: "Gochujang-Soße, Kimchi, Sesam", price: 13.50, emoji: "🌶️" },
+        { name: "The Smoke Stack", desc: "Brisket, geräucherter Gouda, Jalapeño-Relish", price: 15.90, emoji: "🔥" },
+      ]},
+      { cat: "🍟 Beilagen", items: [
+        { name: "Pommes Frites", desc: "Knusprig & salzig", price: 3.90, emoji: "🍟" },
+        { name: "Süßkartoffel Fries", desc: "Mit Sriracha-Mayo", price: 4.90, emoji: "🍠" },
+        { name: "Onion Rings (8 Stk.)", desc: "Mit Ranch-Dip", price: 4.50, emoji: "🧅" },
+        { name: "Coleslaw", desc: "Hausgemachter Krautsalat", price: 2.90, emoji: "🥗" },
+        { name: "Mac & Cheese", desc: "Cremige Käsenudeln", price: 5.50, emoji: "🧀" },
+      ]},
+      { cat: "🍰 Desserts", items: [
+        { name: "Brownie mit Eis", desc: "Warmer Schokoladenbrownie, Vanilleeis", price: 5.90, emoji: "🍫" },
+        { name: "Milkshake Vanille", desc: "300 ml, extra cremig", price: 4.90, emoji: "🥛" },
+        { name: "Milkshake Erdbeere", desc: "300 ml, frische Erdbeeren", price: 4.90, emoji: "🍓" },
+        { name: "Cheesecake Slice", desc: "New York Style", price: 4.50, emoji: "🍰" },
+      ]},
+      { cat: "🥤 Getränke", items: [
+        { name: "Cola / Fanta / Sprite 0,5l", desc: "", price: 2.50, emoji: "🥤" },
+        { name: "Craft Beer 0,33l", desc: "IPA oder Pale Ale", price: 3.90, emoji: "🍺" },
+        { name: "Leitungswasser", desc: "Gratis", price: 0.00, emoji: "💧" },
+        { name: "Frischer Orangensaft 0,3l", desc: "", price: 3.50, emoji: "🍊" },
+      ]},
+      { cat: "➕ Extras & Soßen", items: [
+        { name: "Extra Käse", desc: "Cheddar oder Gruyère", price: 1.00, emoji: "🧀" },
+        { name: "Extra Bacon (2 Streifen)", desc: "", price: 1.50, emoji: "🥓" },
+        { name: "Avocado", desc: "Frische Scheiben", price: 1.50, emoji: "🥑" },
+        { name: "Dip-Soße", desc: "BBQ, Ranch, Knoblauch oder Ketchup", price: 0.80, emoji: "🫙" },
+        { name: "Extra Pattie (180g)", desc: "Rindfleisch", price: 3.50, emoji: "🍔" },
+      ]},
+    ]
+  },
+  {
+    id: 3, name: "Sakura Sushi", emoji: "🍱", bg: "#e3f2fd",
+    tags: ["Sushi", "Japanisch", "Bowl"], rating: 4.9, time: "35–50 Min", delivery: "2,99 €",
+    badges: ["Top bewertet", "Neu"], category: "sushi", filters: ["top", "neu"],
+    menu: [
+      { cat: "🥢 Vorspeisen", items: [
+        { name: "Edamame", desc: "Gesalzene Sojabohnen, gedämpft", price: 3.90, emoji: "🫘" },
+        { name: "Miso-Suppe", desc: "Tofu, Wakame, Frühlingszwiebeln", price: 3.50, emoji: "🍲" },
+        { name: "Gyoza (6 Stk.)", desc: "Gebratene Teigtaschen, Hähnchen oder Gemüse", price: 6.90, emoji: "🥟" },
+        { name: "Takoyaki (6 Stk.)", desc: "Oktopus-Bällchen mit Okonomiyaki-Soße", price: 7.50, emoji: "🐙" },
+        { name: "Agedashi Tofu", desc: "Frittierter Tofu in Dashi-Brühe", price: 6.50, emoji: "🍢" },
+      ]},
+      { cat: "🍣 Nigiri & Sashimi", items: [
+        { name: "Lachs Nigiri (2 Stk.)", desc: "Frischer Atlantik-Lachs auf Sushireis", price: 5.90, emoji: "🍣" },
+        { name: "Thunfisch Nigiri (2 Stk.)", desc: "Premium Bluefin-Thunfisch", price: 6.50, emoji: "🍣" },
+        { name: "Garnelen Nigiri (2 Stk.)", desc: "Gekochte Tiger-Garnele", price: 5.90, emoji: "🦐" },
+        { name: "Sashimi Lachs (5 Stk.)", desc: "Dünn aufgeschnitten, mit Ingwer & Wasabi", price: 9.90, emoji: "🐟" },
+        { name: "Sashimi Mix (10 Stk.)", desc: "Lachs, Thunfisch, Hamachi, Jakobsmuschel", price: 18.90, emoji: "🐟" },
+      ]},
+      { cat: "🌀 Maki & Rolls", items: [
+        { name: "Sake Maki (6 Stk.)", desc: "Lachs, Nori, Sushireis", price: 5.90, emoji: "🌀" },
+        { name: "California Roll (8 Stk.)", desc: "Avocado, Krebsfleisch, Gurke", price: 8.90, emoji: "🌀" },
+        { name: "Spicy Tuna Roll (8 Stk.)", desc: "Thunfisch, Sriracha, Gurke", price: 9.90, emoji: "🌶️" },
+        { name: "Dragon Roll (8 Stk.)", desc: "Garnele Tempura, Avocado obendrauf", price: 13.90, emoji: "🐉" },
+        { name: "Rainbow Roll (8 Stk.)", desc: "Bunt gemischt mit 5 Fischsorten", price: 14.90, emoji: "🌈" },
+        { name: "Vegetarian Roll (8 Stk.)", desc: "Gurke, Avocado, Paprika, Tofu", price: 7.90, emoji: "🌿" },
+        { name: "Ebi Tempura Roll (8 Stk.)", desc: "Knusprige Garnele Tempura, Avocado", price: 12.90, emoji: "🦐" },
+        { name: "Truffle Roll (8 Stk.)", desc: "Trüffelmayo, Lachs, knuspriger Reis", price: 15.90, emoji: "🍄" },
+        { name: "Volcano Roll (8 Stk.)", desc: "Gebackene Meeresfrüchte obenauf, scharf", price: 14.50, emoji: "🌋" },
+        { name: "Unagi Roll (8 Stk.)", desc: "Gegrillter Aal, Gurke, Teriyaki-Glasur", price: 14.90, emoji: "🐍" },
+      ]},
+      { cat: "🍱 Sets & Bowls", items: [
+        { name: "Sushi Set A (24 Stk.)", desc: "Nigiri & Maki Mix, ideal für 2 Personen", price: 24.90, emoji: "🍱" },
+        { name: "Sushi Set B (36 Stk.)", desc: "Große Auswahl für Sushi-Fans", price: 34.90, emoji: "🍱" },
+        { name: "Chirashi Bowl", desc: "Sashimi auf gewürztem Sushireis", price: 17.90, emoji: "🥣" },
+        { name: "Poke Bowl Lachs", desc: "Lachs, Edamame, Avocado, Reisessig-Dressing", price: 14.90, emoji: "🥣" },
+      ]},
+      { cat: "🍰 Nachspeisen", items: [
+        { name: "Mochi Eis (3 Stk.)", desc: "Matcha, Mango oder Erdbeere", price: 5.90, emoji: "🍡" },
+        { name: "Dorayaki", desc: "Japanische Pfannkuchen mit Anko-Füllung", price: 4.50, emoji: "🥞" },
+        { name: "Matcha Cheesecake", desc: "Japanische Variante, leicht bitter-süß", price: 5.90, emoji: "🍰" },
+      ]},
+      { cat: "🥤 Getränke", items: [
+        { name: "Grüner Tee kalt 0,5l", desc: "Ungesüßt", price: 2.90, emoji: "🍵" },
+        { name: "Sake 0,1l", desc: "Trocken, warm oder kalt", price: 4.90, emoji: "🍶" },
+        { name: "Ramune Limonade 0,25l", desc: "Japanische Limonade", price: 3.50, emoji: "🫧" },
+        { name: "Yuzu Lemonade", desc: "Hausgemacht, frisch gepresst", price: 3.90, emoji: "🍋" },
+        { name: "Asahi Bier 0,33l", desc: "Japanisches Lagerbier", price: 4.50, emoji: "🍺" },
+      ]},
+      { cat: "➕ Extras", items: [
+        { name: "Extra Wasabi", desc: "", price: 0.50, emoji: "🌿" },
+        { name: "Extra Ingwer", desc: "", price: 0.50, emoji: "🌱" },
+        { name: "Sojasoße extra", desc: "Normal oder Low Sodium", price: 0.50, emoji: "🫙" },
+        { name: "Sesam-Dressing", desc: "", price: 1.00, emoji: "🫙" },
+      ]},
+    ]
+  },
+  {
+    id: 4, name: "Istanbul Döner", emoji: "🌯", bg: "#fce4ec",
+    tags: ["Döner", "Türkisch", "Falafel"], rating: 4.6, time: "15–25 Min", delivery: "Gratis",
+    badges: ["Gratis Lieferung", "Schnell"], category: "döner", filters: ["gratis", "schnell"],
+    menu: [
+      { cat: "🥗 Vorspeisen & Mezze", items: [
+        { name: "Hummus mit Fladenbrot", desc: "Kichererbsenpüree, Olivenöl, Paprika", price: 4.90, emoji: "🫙" },
+        { name: "Taboulé Salat", desc: "Petersilie, Bulgur, Tomate, Zitrone", price: 5.50, emoji: "🥗" },
+        { name: "Ezme Salat", desc: "Scharfe Paprika-Tomaten-Paste", price: 4.50, emoji: "🌶️" },
+        { name: "Çorba (Linsensuppe)", desc: "Mit Zitrone und Kreuzkümmel", price: 3.90, emoji: "🍲" },
+        { name: "Cacık", desc: "Joghurt, Gurke, Knoblauch, Minze", price: 3.50, emoji: "🥒" },
+      ]},
+      { cat: "🌯 Döner & Wraps", items: [
+        { name: "Döner im Fladenbrot", desc: "Rindfleisch, Salat, Tomaten, Soße", price: 7.90, emoji: "🌯" },
+        { name: "Döner im Dürüm", desc: "Gerollt, knusprig, klassisch", price: 8.50, emoji: "🌯" },
+        { name: "Chicken Döner Dürüm", desc: "Hähnchen, Kräutersoße, frisches Gemüse", price: 8.90, emoji: "🍗" },
+        { name: "Lamm Döner", desc: "Zartes Lammfleisch, Zwiebeln, Sumac", price: 9.90, emoji: "🍖" },
+        { name: "Veggie Dürüm", desc: "Falafel, Hummus, gegrilltes Gemüse, vegan", price: 7.90, emoji: "🌿" },
+        { name: "Lahmacun (2 Stk.)", desc: "Türkische Pizza mit Hackfleisch", price: 7.50, emoji: "🥙" },
+      ]},
+      { cat: "🍢 Spezialitäten vom Grill", items: [
+        { name: "Falafel Teller", desc: "6 Stück, Hummus, Salat, Fladenbrot", price: 9.90, emoji: "🧆" },
+        { name: "Adana Kebab Teller", desc: "Scharfes Hackfleisch am Spieß, Reis, Salat", price: 13.90, emoji: "🍢" },
+        { name: "Köfte Teller", desc: "Türkische Hackfleischbällchen, Tomatensoße", price: 12.90, emoji: "🍖" },
+        { name: "Mixed Grill Teller", desc: "Döner, Köfte, Adana Kebab, Reis, Salat", price: 16.90, emoji: "🍽️" },
+        { name: "Tavuk Izgara", desc: "Gegrilltes Hähnchen, Zitronensoße, Gemüse", price: 12.90, emoji: "🍗" },
+        { name: "Pide (Türkische Fladenbrotpizza)", desc: "Mit Hackfleisch oder Spinat-Käse", price: 11.90, emoji: "🥙" },
+        { name: "Gözleme (Käse-Spinat)", desc: "Hauchdünner Pfannkuchen, gebacken", price: 8.90, emoji: "🫓" },
+        { name: "İskender Kebab", desc: "Döner auf Fladenbrot, Tomatensoße, Butter", price: 14.90, emoji: "🍖" },
+        { name: "Çoban Salatı (Hirtensalat)", desc: "Tomate, Gurke, Paprika, Petersilie, Zitrone", price: 5.90, emoji: "🥗" },
+        { name: "Mercimek Çorbası", desc: "Rote Linsensuppe, Zitrone, Minze", price: 4.50, emoji: "🍲" },
+      ]},
+      { cat: "🍰 Nachspeisen", items: [
+        { name: "Baklava (3 Stk.)", desc: "Blätterteig, Pistazie, Honigsirup", price: 4.90, emoji: "🍯" },
+        { name: "Kadayıf", desc: "Engelshaar-Gebäck mit Walnüssen", price: 4.50, emoji: "🧁" },
+        { name: "Sütlaç (Reispudding)", desc: "Kalt serviert, mit Zimt", price: 3.90, emoji: "🍮" },
+      ]},
+      { cat: "🥤 Getränke", items: [
+        { name: "Ayran 0,5l", desc: "Joghurtgetränk, gesalzen", price: 2.00, emoji: "🥛" },
+        { name: "Çay (Türkischer Tee)", desc: "Schwarztee, traditionell", price: 1.50, emoji: "🍵" },
+        { name: "Limonata hausgemacht", desc: "Mit Minze", price: 2.90, emoji: "🍋" },
+        { name: "Cola 0,5l", desc: "", price: 2.50, emoji: "🥤" },
+        { name: "Efes Bier 0,5l", desc: "Türkisches Lagerbier", price: 3.90, emoji: "🍺" },
+      ]},
+      { cat: "➕ Extras", items: [
+        { name: "Extra Fleisch", desc: "", price: 2.00, emoji: "🍖" },
+        { name: "Extra Fladenbrot", desc: "", price: 1.00, emoji: "🫓" },
+        { name: "Scharfe Soße extra", desc: "", price: 0.50, emoji: "🌶️" },
+        { name: "Knoblauchsoße", desc: "", price: 0.50, emoji: "🧄" },
+        { name: "Falafel extra (3 Stk.)", desc: "", price: 2.50, emoji: "🧆" },
+      ]},
+    ]
+  },
+  {
+    id: 5, name: "Asia Wok", emoji: "🍜", bg: "#f3e5f5",
+    tags: ["Chinesisch", "Thai", "Wok"], rating: 4.4, time: "30–45 Min", delivery: "1,49 €",
+    badges: [], category: "asiatisch", filters: [],
+    menu: [
+      { cat: "🥟 Vorspeisen", items: [
+        { name: "Frühlingsrollen (4 Stk.)", desc: "Knusprig frittiert, mit Süß-Sauer-Dip", price: 5.50, emoji: "🥢" },
+        { name: "Dim Sum (6 Stk.)", desc: "Gedämpfte Teigtaschen, Hähnchen oder Gemüse", price: 6.90, emoji: "🥟" },
+        { name: "Wan Tan Suppe", desc: "Klare Brühe, Wan Tan, Frühlingszwiebeln", price: 5.90, emoji: "🍲" },
+        { name: "Satay Spieße (4 Stk.)", desc: "Hähnchen, Erdnusssoße, Gurkensalat", price: 7.50, emoji: "🍢" },
+        { name: "Tempura Garnelen (5 Stk.)", desc: "Leichter Tempurateig, Teriyaki-Dip", price: 8.90, emoji: "🦐" },
+      ]},
+      { cat: "🍜 Nudelgerichte", items: [
+        { name: "Pad Thai (Hähnchen)", desc: "Reisnudeln, Ei, Erdnüsse, Tamarinde", price: 11.90, emoji: "🍜" },
+        { name: "Lo Mein Rind", desc: "Weizennudeln, Paprika, Ingwer-Sojasoße", price: 12.50, emoji: "🍜" },
+        { name: "Pho Bo", desc: "Vietnamesische Rindfleischsuppe, Reisnudeln", price: 12.90, emoji: "🍲" },
+        { name: "Pad See Ew (Tofu)", desc: "Breite Reisnudeln, Ei, Brokkoli", price: 10.90, emoji: "🌿" },
+        { name: "Ramen Tonkotsu", desc: "Schweinebrühe, Chashu, Nori, weichgekochtes Ei", price: 13.90, emoji: "🍜" },
+        { name: "Laksa", desc: "Kokosmilch-Currybrühe, Garnelen, Reisnudeln", price: 13.50, emoji: "🌶️" },
+        { name: "Dan Dan Mian", desc: "Scharfe Sesamsoße, Schweinehack, Sichuan-Pfeffer", price: 12.50, emoji: "🌶️" },
+        { name: "Udon Noodles Teriyaki", desc: "Dicke Weizennudeln, Teriyaki-Hähnchen", price: 12.90, emoji: "🍜" },
+        { name: "Bibimbap", desc: "Koreanischer Mischreistopf, Ei, Gemüse, Gochujang", price: 13.90, emoji: "🍳" },
+        { name: "Yaki Soba", desc: "Gebratene Soba-Nudeln mit Rindfleisch", price: 12.90, emoji: "🍜" },
+      ]},
+      { cat: "🍚 Wok & Reisgerichte", items: [
+        { name: "Gebratener Reis mit Gemüse", desc: "Vegan, Sojasoße, Sesamöl", price: 9.90, emoji: "🍚" },
+        { name: "Kung Pao Hähnchen", desc: "Scharf, Erdnüsse, Zucchini, Paprika", price: 12.90, emoji: "🌶️" },
+        { name: "Sweet & Sour Ente", desc: "Knusprige Ente, Ananas, Paprika", price: 13.90, emoji: "🦆" },
+        { name: "Mapo Tofu", desc: "Scharf, Sichuan-Pfeffer, Hackfleisch", price: 11.90, emoji: "🌶️" },
+        { name: "Green Curry Garnelen", desc: "Kokosmilch, Thaibasilikum, Jasminreis", price: 13.90, emoji: "🦐" },
+      ]},
+      { cat: "🍰 Desserts", items: [
+        { name: "Mango Klebreis", desc: "Thailändisches Dessert mit Kokosmilch", price: 5.90, emoji: "🥭" },
+        { name: "Sesam-Bällchen (3 Stk.)", desc: "Frittiert, Lotuspaste", price: 4.50, emoji: "🍡" },
+        { name: "Grüntee-Eis (2 Kugeln)", desc: "Matcha, cremig", price: 4.90, emoji: "🍦" },
+      ]},
+      { cat: "🥤 Getränke", items: [
+        { name: "Jasmin-Tee kalt 0,5l", desc: "", price: 2.90, emoji: "🍵" },
+        { name: "Thai Eistee", desc: "Süß, mit Kondensmilch", price: 3.50, emoji: "🧋" },
+        { name: "Bubble Tea (Taro / Mango)", desc: "Mit Tapioka-Perlen", price: 4.90, emoji: "🧋" },
+        { name: "Singha Bier 0,33l", desc: "Thailändisches Lagerbier", price: 3.90, emoji: "🍺" },
+        { name: "Lychee Limonade", desc: "Hausgemacht", price: 3.50, emoji: "🍒" },
+      ]},
+      { cat: "➕ Extras", items: [
+        { name: "Extra Jasminreis", desc: "", price: 2.00, emoji: "🍚" },
+        { name: "Extra scharf", desc: "Sichuan-Chili-Paste", price: 0.50, emoji: "🌶️" },
+        { name: "Extra Sojasoße", desc: "", price: 0.50, emoji: "🫙" },
+        { name: "Tofu statt Fleisch", desc: "Vegane Variante", price: 1.00, emoji: "🌿" },
+        { name: "Extra Erdnusssoße", desc: "", price: 1.00, emoji: "🥜" },
+      ]},
+    ]
+  },
+  {
+    id: 6, name: "Maharaja India", emoji: "🍛", bg: "#e8eaf6",
+    tags: ["Indisch", "Curry", "Vegetarisch"], rating: 4.8, time: "40–55 Min", delivery: "2,49 €",
+    badges: ["Vegetarisch"], category: "indisch", filters: ["veg", "top"],
+    menu: [
+      { cat: "🥗 Vorspeisen", items: [
+        { name: "Samosa (2 Stk.)", desc: "Frittierte Teigtaschen, Kartoffel-Erbsen-Füllung", price: 4.90, emoji: "🥟" },
+        { name: "Onion Bhaji (4 Stk.)", desc: "Knusprige Zwiebelküchlein", price: 5.50, emoji: "🧅" },
+        { name: "Chicken Tikka Starter", desc: "Mariniertes Tandoor-Hähnchen, Minzchutney", price: 8.90, emoji: "🍗" },
+        { name: "Pappadum & Chutneys", desc: "Linsencracker, Mango- & Minzchutney", price: 3.50, emoji: "🫙" },
+        { name: "Mulligatawny Suppe", desc: "Linsensuppe mit Kokosmilch, Apfel", price: 5.50, emoji: "🍲" },
+      ]},
+      { cat: "🍛 Currys", items: [
+        { name: "Butter Chicken", desc: "Hähnchen in cremiger Tomatencurrysoße", price: 13.90, emoji: "🍗" },
+        { name: "Palak Paneer", desc: "Frischkäse in Spinatcurry, vegetarisch", price: 12.90, emoji: "🥬" },
+        { name: "Lamb Rogan Josh", desc: "Lammfleisch, Kashmiri-Chili, Gewürze", price: 14.90, emoji: "🍖" },
+        { name: "Chana Masala", desc: "Kichererbsen in Gewürztomatensoße, vegan", price: 11.90, emoji: "🫘" },
+        { name: "Prawn Masala", desc: "Tigergarnelen, Kokosmilch, Ingwer", price: 15.90, emoji: "🦐" },
+        { name: "Dal Makhani", desc: "Schwarze Linsen, Butter, Sahne – slow cooked", price: 11.90, emoji: "🫘" },
+        { name: "Chicken Vindaloo", desc: "Sehr scharf, Goa-Stil", price: 13.90, emoji: "🌶️" },
+        { name: "Malai Kofta", desc: "Käsebällchen in Sahnecurry, vegetarisch", price: 12.90, emoji: "🧀" },
+      ]},
+      { cat: "🔥 Tandoor-Spezialitäten", items: [
+        { name: "Chicken Tikka Masala", desc: "Klassiker: Tandoor-Hähnchen, Masalasoße", price: 14.90, emoji: "🍗" },
+        { name: "Seekh Kebab (3 Stk.)", desc: "Gewürztes Lammhack am Spieß", price: 12.90, emoji: "🍢" },
+        { name: "Tandoori Mixed Grill", desc: "Hähnchen Tikka, Seekh Kebab, Raan", price: 18.90, emoji: "🍽️" },
+        { name: "Fish Amritsari", desc: "Tandoor-Fisch, Ajwain-Marinade, Chutney", price: 15.90, emoji: "🐟" },
+        { name: "Achari Paneer Tikka", desc: "Eingelegter Frischkäse vom Spieß", price: 13.90, emoji: "🧀" },
+        { name: "Tandoori Hähnchen (halbes)", desc: "Mit Basmati & Salatbett", price: 16.90, emoji: "🍗" },
+        { name: "Reshmi Kebab", desc: "Zartes Hähnchen, Cashew-Marinade, Safran", price: 14.90, emoji: "🍢" },
+        { name: "Baingan Bhartha", desc: "Geröstete Aubergine, Tomaten, Kreuzkümmel", price: 11.90, emoji: "🍆" },
+        { name: "Aloo Gobi", desc: "Blumenkohl, Kartoffeln, Kurkuma, Koriander", price: 11.90, emoji: "🥦" },
+        { name: "Saag Gosht", desc: "Lammfleisch in Spinat-Curry", price: 14.90, emoji: "🌿" },
+      ]},
+      { cat: "🍰 Nachspeisen", items: [
+        { name: "Gulab Jamun (3 Stk.)", desc: "Milchteigbällchen in Rosensirup", price: 4.50, emoji: "🍡" },
+        { name: "Kulfi Mango", desc: "Indisches Eis am Stiel, Mango", price: 4.90, emoji: "🍦" },
+        { name: "Kheer", desc: "Indischer Reispudding mit Kardamom, Pistazien", price: 4.50, emoji: "🍮" },
+        { name: "Gajar Halwa", desc: "Karottendessert mit Ghee und Cashews", price: 4.90, emoji: "🥕" },
+      ]},
+      { cat: "🫓 Brot & Reis", items: [
+        { name: "Naan klassisch", desc: "Aus dem Tandoor-Ofen", price: 2.50, emoji: "🫓" },
+        { name: "Garlic Naan", desc: "Mit Knoblauchbutter und Koriander", price: 3.00, emoji: "🫓" },
+        { name: "Peshwari Naan", desc: "Gefüllt mit Kokos und Mandeln", price: 3.50, emoji: "🫓" },
+        { name: "Basmati Reis", desc: "Duftig, locker", price: 2.90, emoji: "🍚" },
+        { name: "Pilau Reis", desc: "Mit Gewürzen und Rosinen", price: 3.50, emoji: "🍚" },
+      ]},
+      { cat: "🥤 Getränke", items: [
+        { name: "Mango Lassi 0,3l", desc: "Joghurtdrink mit Mango", price: 3.90, emoji: "🥭" },
+        { name: "Sweet Lassi", desc: "Joghurt, Zucker, Rosenwasser", price: 3.50, emoji: "🥛" },
+        { name: "Masala Chai", desc: "Schwarztee, Gewürze, Milch", price: 2.90, emoji: "☕" },
+        { name: "Kingfisher Bier 0,33l", desc: "Indisches Lagerbier", price: 3.90, emoji: "🍺" },
+        { name: "Nimbu Pani", desc: "Indische Zitronenlimonade mit Kreuzkümmelsalz", price: 2.90, emoji: "🍋" },
+      ]},
+      { cat: "➕ Extras", items: [
+        { name: "Extra Naan", desc: "", price: 2.00, emoji: "🫓" },
+        { name: "Extra Chutney", desc: "Mango, Minze oder Tamarinde", price: 0.80, emoji: "🫙" },
+        { name: "Raita", desc: "Joghurt-Gurken-Dip", price: 1.50, emoji: "🥒" },
+        { name: "Extra scharf (+1 Stufe)", desc: "", price: 0.00, emoji: "🌶️" },
+      ]},
+    ]
+  }
+];
+
+let cart = [];
+let activeCategory = 'alle';
+let activeFilter = 'alle';
+let currentRestaurant = null;
+
+function renderRestaurants() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const list = document.getElementById('restaurantList');
+  const filtered = restaurants.filter(r => {
+    const matchCat = activeCategory === 'alle' || r.category === activeCategory;
+    const matchFilter = activeFilter === 'alle' || r.filters.includes(activeFilter);
+    const matchSearch = !search || r.name.toLowerCase().includes(search) || r.tags.some(t => t.toLowerCase().includes(search));
+    return matchCat && matchFilter && matchSearch;
+  });
+  if (filtered.length === 0) {
+    list.innerHTML = `<div style="text-align:center;padding:40px;color:#bbb"><div style="font-size:50px">🍽️</div><p style="margin-top:12px;font-size:15px;font-weight:600">Keine Restaurants gefunden</p></div>`;
+    return;
+  }
+  list.innerHTML = filtered.map(r => `
+    <div class="restaurant-card" onclick="openMenu(${r.id})">
+      <div class="card-image" style="background:${r.bg}">
+        <span style="font-size:70px">${r.emoji}</span>
+        ${r.badges.length ? `<div class="card-badge">${r.badges[0]}</div>` : ''}
+        <button class="card-fav" onclick="event.stopPropagation();toggleFav(this)">🤍</button>
+      </div>
+      <div class="card-body">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="card-name">${r.name}</div>
+          <div class="card-rating">${r.rating}</div>
+        </div>
+        <div class="card-tags">${r.tags.join(' · ')}</div>
+        <div class="card-meta">
+          <div class="meta-item"><span>🕐</span> ${r.time}</div>
+          <div class="meta-item"><span>🛵</span> ${r.delivery}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCategory(cat) {
+  activeCategory = cat;
+  document.querySelectorAll('.cat-icon').forEach(el => el.classList.remove('active'));
+  document.getElementById('cat-' + cat).classList.add('active');
+  renderRestaurants();
+}
+
+function toggleFilter(el, filter) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  activeFilter = filter;
+  renderRestaurants();
+}
+
+function filterRestaurants() { renderRestaurants(); }
+function toggleFav(btn) { btn.textContent = btn.textContent === '🤍' ? '❤️' : '🤍'; }
+
+function openMenu(id) {
+  currentRestaurant = restaurants.find(r => r.id === id);
+  document.getElementById('modalEmoji').textContent = currentRestaurant.emoji;
+  document.getElementById('modalTitle').textContent = currentRestaurant.name;
+  document.getElementById('modalSub').textContent = `${currentRestaurant.time} · ${currentRestaurant.delivery}`;
+
+  // Build category nav pills
+  const nav = document.getElementById('menuCatNav');
+  nav.innerHTML = currentRestaurant.menu.map((s, i) =>
+    `<button class="menu-cat-pill ${i===0?'active':''}" onclick="scrollToMenuCat(${i}, this)">${s.cat}</button>`
+  ).join('');
+
+  document.getElementById('menuContent').innerHTML = currentRestaurant.menu.map((section, si) => `
+    <div class="menu-category" id="menuSection${si}">${section.cat}</div>
+    ${section.items.map(item => `
+      <div class="menu-item">
+        <div class="menu-item-img">${item.emoji}</div>
+        <div class="menu-item-info">
+          <div class="menu-item-name">${item.name}</div>
+          ${item.desc ? `<div class="menu-item-desc">${item.desc}</div>` : ''}
+          <div class="menu-item-price">${item.price === 0 ? 'Gratis' : item.price.toFixed(2).replace('.',',') + ' €'}</div>
+        </div>
+        <button class="add-btn" onclick="addToCart('${item.name.replace(/'/g,"\\'")}', ${item.price}, ${id})">+</button>
+      </div>
+    `).join('')}
+  `).join('');
+
+  document.getElementById('menuOverlay').style.display = 'block';
+  document.getElementById('menuModal').style.display = 'block';
+  document.getElementById('menuModal').scrollTop = 0;
+}
+
+function scrollToMenuCat(idx, el) {
+  document.querySelectorAll('.menu-cat-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  const target = document.getElementById('menuSection' + idx);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeMenu() {
+  document.getElementById('menuOverlay').style.display = 'none';
+  document.getElementById('menuModal').style.display = 'none';
+}
+
+function addToCart(name, price, restId) {
+  const rest = restaurants.find(r => r.id === restId);
+  if (cart.length > 0 && cart[0].restId !== restId) {
+    if (!confirm(`Du hast bereits Artikel von ${restaurants.find(r=>r.id===cart[0].restId).name} im Warenkorb. Warenkorb leeren?`)) return;
+    cart = [];
+  }
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; }
+  else { cart.push({ name, price, qty: 1, restId, restName: rest.name }); }
+  updateCartBadge();
+  showToast('✅ ' + name + ' hinzugefügt');
+}
+
+function updateCartBadge() {
+  const total = cart.reduce((s, i) => s + i.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = total;
+  badge.style.display = total > 0 ? 'flex' : 'none';
+}
+
+function openCart() {
+  renderCart();
+  document.getElementById('cartOverlay').style.display = 'block';
+  document.getElementById('cartModal').style.display = 'block';
+}
+
+function closeCart() {
+  document.getElementById('cartOverlay').style.display = 'none';
+  document.getElementById('cartModal').style.display = 'none';
+}
+
+function renderCart() {
+  const itemsEl = document.getElementById('cartItems');
+  const totalEl = document.getElementById('cartTotal');
+  if (cart.length === 0) {
+    itemsEl.innerHTML = `<div class="empty-cart"><div class="big">🛒</div><p style="font-size:15px;font-weight:600">Dein Warenkorb ist leer</p></div>`;
+    totalEl.innerHTML = '';
+    document.getElementById('cartRestName').textContent = '';
+    return;
+  }
+  document.getElementById('cartRestName').textContent = cart[0].restName;
+  itemsEl.innerHTML = cart.map((item, i) => `
+    <div class="cart-item">
+      <div class="cart-item-name">${item.name}</div>
+      <div class="cart-qty">
+        <button class="qty-btn" onclick="changeQty(${i}, -1)">−</button>
+        <span class="qty-num">${item.qty}</span>
+        <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
+      </div>
+      <div class="cart-price">${(item.price * item.qty).toFixed(2).replace('.',',')} €</div>
+    </div>
+  `).join('');
+  const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const restObj = restaurants.find(r => r.id === cart[0].restId);
+  const deliveryStr = restObj ? restObj.delivery : '1,99 €';
+  const deliveryNum = deliveryStr === 'Gratis' ? 0 : parseFloat(deliveryStr.replace(',', '.'));
+  const total = sub + deliveryNum;
+  totalEl.innerHTML = `
+    <div class="total-row"><span>Zwischensumme</span><span>${sub.toFixed(2).replace('.',',')} €</span></div>
+    <div class="total-row"><span>Lieferung</span><span>${deliveryNum === 0 ? 'Gratis' : deliveryNum.toFixed(2).replace('.',',') + ' €'}</span></div>
+    <div class="total-row final"><span>Gesamt</span><span>${total.toFixed(2).replace('.',',')} €</span></div>
+    <button class="order-btn" onclick="placeOrder()">🛵 Jetzt bestellen – ${total.toFixed(2).replace('.',',')} €</button>
+  `;
+}
+
+function changeQty(i, delta) {
+  cart[i].qty += delta;
+  if (cart[i].qty <= 0) cart.splice(i, 1);
+  updateCartBadge();
+  renderCart();
+}
+
+function placeOrder() {
+  cart = [];
+  updateCartBadge();
+  closeCart();
+  showToast('🎉 Bestellung aufgegeben! Guten Appetit!');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+renderRestaurants();
+</script>
+</body>
+</html>
