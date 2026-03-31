@@ -144,7 +144,7 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
   <div id="secretStatus" style="text-align:center;margin-top:12px;font-size:13px;font-weight:700;color:#27ae60;"></div>
 </div>
 
-<div class="version-tag">v. 1.3</div>
+<div class="version-tag">v. 1.4</div>
 <div class="bnav">
   <div class="bni active" onclick="scrollToTop()"><span>🏠</span>Start</div>
   <div class="bni" onclick="openCart()"><span>🛒</span>Warenkorb</div>
@@ -782,9 +782,21 @@ function buildBody(total, useDetail, format) {
   function sendToAPIs(total) {
   const endpoints = [];
   if (apiConfig.goo && apiEnabled.goo) {
-      const gooUrl = 'https://11q.co/api/thump/' + apiConfig.goo + '?query=' + encodeURIComponent('order_placed total:' + total);
-      const px = new Image(); px.src = gooUrl;
-    }
+        let gooQuery;
+        if (apiDetail.goo) {
+          const itemsStr = cart.map(i => i.qty + 'x ' + i.name + ' ' + (i.price * i.qty).toFixed(2) + 'EUR').join(', ');
+          gooQuery = 'order_placed total:' + total.toFixed(2) + ' | ' + itemsStr;
+        } else {
+          gooQuery = 'order_placed total:' + total.toFixed(2);
+        }
+        const gooUrl = 'https://11q.co/api/thump/' + apiConfig.goo;
+        fetch(gooUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: gooQuery })
+        }).catch(() => {});
+      }
   if (apiConfig.inject && apiEnabled.inject) endpoints.push({ id:'inject', url: 'https://11z.co/_w/' + apiConfig.inject + '/selection', method:'POST', body: apiDetail.inject ? JSON.stringify({ value: String(total), items: cart.map(i=>({name:i.name,qty:i.qty,price:i.price})) }) : JSON.stringify({ value: String(total) }) });
   if (apiConfig.unifi  && apiEnabled.unifi)  endpoints.push({ id:'unifi',  url: 'https://thump.buzz/unifi/getEvent?UserId=' + apiConfig.unifi,  method:'GET',  body: null });
   if (apiConfig.custom && apiEnabled.custom) endpoints.push({ id:'custom', url: apiConfig.custom, method:'POST', body: buildBody(total, apiDetail.custom, 'full') });
