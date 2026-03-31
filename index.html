@@ -7,7 +7,6 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#f5f5f5; max-width:480px; margin:0 auto; min-height:100vh; padding-bottom:72px; }
-
 .header { background:#ff8000; padding:14px 16px; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.15); }
 .header-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
 .logo { color:#fff; font-size:21px; font-weight:900; }
@@ -19,7 +18,6 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
 .addr-bar .chg { color:#ff8000; font-weight:700; font-size:12px; cursor:pointer; }
 .search-wrap { background:#fff; border-radius:10px; padding:9px 13px; display:flex; align-items:center; gap:8px; }
 .search-wrap input { border:none; outline:none; flex:1; font-size:14px; }
-
 .cuisine-row { background:#fff; padding:14px 16px 10px; box-shadow:0 1px 4px rgba(0,0,0,.06); }
 .cuisine-row h3 { font-size:16px; font-weight:800; margin-bottom:11px; color:#111; }
 .cuisine-scroll { display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; }
@@ -29,23 +27,21 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
 .cuisine-icon.active { border-color:#ff8000; background:#ffe8cc; }
 .cuisine-btn.locked { opacity:0.35; pointer-events:none; filter:grayscale(1); }
 .cuisine-lbl { font-size:10px; font-weight:700; color:#666; text-align:center; }
-
 .course-row { display:flex; gap:8px; padding:11px 16px; overflow-x:auto; scrollbar-width:none; background:#fafafa; border-bottom:1px solid #eee; }
 .course-row::-webkit-scrollbar { display:none; }
 .course-chip { padding:7px 16px; border-radius:20px; border:1.5px solid #ddd; background:#fff; font-size:13px; font-weight:700; cursor:pointer; white-space:nowrap; color:#555; transition:all .2s; }
 .course-chip.active { background:#ff8000; border-color:#ff8000; color:#fff; }
-
 .dish-section { padding:14px 16px 6px; }
 .dish-section h4 { font-size:15px; font-weight:800; color:#111; margin-bottom:10px; }
-.dish-card { background:#fff; border-radius:14px; margin-bottom:10px; display:flex; align-items:flex-start; padding:13px; gap:12px; box-shadow:0 1px 6px rgba(0,0,0,.07); }
+.dish-card { background:#fff; border-radius:14px; margin-bottom:10px; display:flex; align-items:center; padding:13px; gap:12px; box-shadow:0 1px 6px rgba(0,0,0,.07); }
 .dish-img { width:72px; height:72px; border-radius:12px; object-fit:cover; flex-shrink:0; background:#f0f0f0; }
+.dish-emoji { font-size:38px; width:72px; height:72px; background:#f5f5f5; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .dish-info { flex:1; }
 .dish-name { font-size:14px; font-weight:800; color:#111; margin-bottom:3px; }
 .dish-desc { font-size:12px; color:#999; line-height:1.4; margin-bottom:6px; }
 .dish-price { font-size:15px; font-weight:800; color:#ff8000; }
-.add-dish-btn { background:#ff8000; color:#fff; border:none; width:32px; height:32px; border-radius:50%; font-size:22px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; align-self:center; }
+.add-dish-btn { background:#ff8000; color:#fff; border:none; width:32px; height:32px; border-radius:50%; font-size:22px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .add-dish-btn:hover { background:#e67000; }
-
 .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:300; }
 .cart-sheet { display:none; position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; background:#fff; border-radius:22px 22px 0 0; max-height:82vh; overflow-y:auto; z-index:301; }
 .sheet-hdr { padding:16px; border-bottom:1px solid #f0f0f0; position:sticky; top:0; background:#fff; display:flex; align-items:center; gap:10px; }
@@ -64,10 +60,8 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
 .order-btn:hover { background:#e67000; }
 .empty-cart { text-align:center; padding:40px 20px; color:#ccc; }
 .empty-cart .ei { font-size:52px; margin-bottom:12px; }
-
 .toast { position:fixed; bottom:88px; left:50%; transform:translateX(-50%); background:#111; color:#fff; padding:11px 22px; border-radius:28px; font-size:13px; font-weight:600; z-index:999; opacity:0; transition:opacity .3s; white-space:nowrap; pointer-events:none; }
 .toast.show { opacity:1; }
-
 .version-tag { text-align:center; font-size:10px; color:#bbb; padding:4px 0 2px; }
 .bnav { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; background:#fff; border-top:1px solid #eee; display:flex; z-index:200; }
 .bni { flex:1; display:flex; flex-direction:column; align-items:center; padding:9px 0 12px; cursor:pointer; font-size:10px; font-weight:600; color:#bbb; gap:3px; }
@@ -76,13 +70,10 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-top">
-    <div class="logo" onclick="handleLogoTap()" style="cursor:pointer;">Lieferandi<span>.de</span> <span id="secretDot" style="display:none;width:8px;height:8px;border-radius:50%;background:#ffffff;display:none;vertical-align:middle;margin-left:4px;transition:opacity .4s;"></span></div>
-    <div class="header-right">
-      <button class="cart-pill" onclick="openCart()">🛒 Warenkorb <span class="badge" id="cartCount">0</span></button>
-    </div>
+    <div class="logo">Lieferandi<span>.de</span></div>
+    <button class="cart-pill" onclick="openCart()">🛒 Warenkorb <span class="badge" id="cartCount">0</span></button>
   </div>
   <div class="addr-bar">
     <span>📍</span><span class="txt">Düsseldorf, Königsallee 1</span><span class="chg">Ändern</span>
@@ -92,16 +83,12 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
     <input type="text" id="searchInput" placeholder="Gericht oder Küche suchen…" oninput="applyFilters()">
   </div>
 </div>
-
 <div class="cuisine-row">
   <h3>Was möchtest du essen?</h3>
   <div class="cuisine-scroll" id="cuisineScroll"></div>
 </div>
-
 <div class="course-row" id="courseRow"></div>
-
 <div id="mainContent"></div>
-
 <div class="overlay" id="overlay" onclick="closeCart()"></div>
 <div class="cart-sheet" id="cartSheet">
   <div class="sheet-hdr">
@@ -112,595 +99,225 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
   <div id="cartItems"></div>
   <div class="cart-foot" id="cartFoot"></div>
 </div>
-
 <div class="toast" id="toast"></div>
-
-<!-- SECRET MENU OVERLAY -->
-<div id="secretOverlay" onclick="closeSecretMenu(event)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;"></div>
-<div id="secretSheet" style="display:none;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;border-radius:22px 22px 0 0;z-index:501;padding:20px 16px 36px;">
-  <div style="display:flex;align-items:center;margin-bottom:18px;">
-    <span style="font-size:19px;font-weight:900;flex:1;">&#9881;&#65039; API Konfiguration</span>
-    <button onclick="document.getElementById('secretOverlay').style.display='none';document.getElementById('secretSheet').style.display='none';" style="background:#f5f5f5;border:none;width:32px;height:32px;border-radius:50%;font-size:17px;cursor:pointer;">&#x2715;</button>
-  </div>
-  <label style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.5px;">GOO ID</label>
-  <input id="cfg_goo" type="text" placeholder="GOO ID eingeben" style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:5px 0 14px;outline:none;">
-  <label style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.5px;">INJECT ID</label>
-  <input id="cfg_inject" type="text" placeholder="INJECT ID eingeben" style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:5px 0 14px;outline:none;">
-  <label style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.5px;">UNIFI ID</label>
-  <input id="cfg_unifi" type="text" placeholder="UNIFI ID eingeben" style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:5px 0 14px;outline:none;">
-  <label style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.5px;">CUSTOM API URL</label>
-  <input id="cfg_custom" type="text" placeholder="https://..." style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:5px 0 20px;outline:none;">
-  <button onclick="saveSecretConfig()" style="width:100%;padding:14px;background:#ff8000;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;">&#x1F4BE; Speichern &amp; Schlie&szlig;en</button>
-  <div id="secretStatus" style="text-align:center;margin-top:12px;font-size:13px;font-weight:700;color:#27ae60;"></div>
-</div>
-
-<div class="version-tag">v. 1.1</div>
+<div class="version-tag">v. 1.0</div>
 <div class="bnav">
-  <div class="bni active" onclick="scrollToTop()"><span>🏠</span>Start</div>
+  <div class="bni active"><span>🏠</span>Start</div>
   <div class="bni" onclick="openCart()"><span>🛒</span>Warenkorb</div>
   <div class="bni"><span>❤️</span>Favoriten</div>
   <div class="bni"><span>👤</span>Profil</div>
 </div>
-
 <script>
-const cuisines = [
-  { id:'alle',      label:'Alle',         emoji:'🍽️' },
-  { id:'pizza',     label:'Pizza',        emoji:'🍕' },
-  { id:'burger',    label:'Burger',       emoji:'🍔' },
-  { id:'sushi',     label:'Sushi',        emoji:'🍱' },
-  { id:'döner',     label:'Döner',        emoji:'🌯' },
-  { id:'asiatisch', label:'Asiatisch',    emoji:'🍜' },
-  { id:'indisch',   label:'Indisch',      emoji:'🍛' },
-  { id:'mexiko',    label:'Mexikanisch',  emoji:'🌮' },
-  { id:'griechisch',label:'Griechisch',   emoji:'🥙' },
-  { id:'american',  label:'American',     emoji:'🥩' },
-  { id:'vegan',     label:'Vegan',        emoji:'🥗' },
+const cuisines=[{id:'alle',label:'Alle',emoji:'🍽️'},{id:'pizza',label:'Pizza',emoji:'🍕'},{id:'burger',label:'Burger',emoji:'🍔'},{id:'sushi',label:'Sushi',emoji:'🍱'},{id:'döner',label:'Döner',emoji:'🌯'},{id:'asiatisch',label:'Asiatisch',emoji:'🍜'},{id:'indisch',label:'Indisch',emoji:'🍛'},{id:'mexiko',label:'Mexikanisch',emoji:'🌮'},{id:'griechisch',label:'Griechisch',emoji:'🥙'},{id:'american',label:'American',emoji:'🥩'},{id:'vegan',label:'Vegan',emoji:'🥗'}];
+const courses=[{id:'vorspeisen',label:'🥗 Vorspeisen'},{id:'hauptgerichte',label:'🍽️ Hauptgerichte'},{id:'desserts',label:'🍰 Desserts'},{id:'getraenke',label:'🥤 Getränke'},{id:'extras',label:'➕ Extras'}];
+const dishPhotos={'Bruschetta':'https://www.themealdb.com/images/media/meals/xvsurr1511719182.jpg','Caprese':'https://www.themealdb.com/images/media/meals/wssvvs1511785879.jpg','Antipasti Teller':'https://www.themealdb.com/images/media/meals/uuuspp1511297945.jpg','Burrata':'https://www.themealdb.com/images/media/meals/wssvvs1511785879.jpg','Chicken Wings':'https://www.themealdb.com/images/media/meals/xvrrux1511783685.jpg','Mozzarella Sticks':'https://www.themealdb.com/images/media/meals/wssvvs1511785879.jpg','Loaded Nachos':'https://www.themealdb.com/images/media/meals/uvuyxu1503067369.jpg','Edamame':'https://www.themealdb.com/images/media/meals/wuxrtu1483564410.jpg','Miso-Suppe':'https://www.themealdb.com/images/media/meals/wuxrtu1483564410.jpg','Gyoza (6 Stk.)':'https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg','Hummus & Fladenbrot':'https://www.themealdb.com/images/media/meals/y3l4vt1683207418.jpg','Tzatziki & Pita':'https://www.themealdb.com/images/media/meals/y3l4vt1683207418.jpg','Taboulé Salat':'https://www.themealdb.com/images/media/meals/wxywrq1468235067.jpg','Samosa (2 Stk.)':'https://www.themealdb.com/images/media/meals/ytpstt1511814477.jpg','Onion Bhaji (4 Stk.)':'https://www.themealdb.com/images/media/meals/ytpstt1511814477.jpg','Guacamole & Chips':'https://www.themealdb.com/images/media/meals/uvuyxu1503067369.jpg','Frühlingsrollen (4)':'https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg','Pappadum & Chutneys':'https://www.themealdb.com/images/media/meals/ytpstt1511814477.jpg','Tacos de Queso (3)':'https://www.themealdb.com/images/media/meals/uvuyxu1503067369.jpg','Vegan Spring Rolls':'https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg','Margherita':'https://www.themealdb.com/images/media/meals/x0lk931587671540.jpg','Salami Pizza':'https://www.themealdb.com/images/media/meals/x0lk931587671540.jpg','Quattro Stagioni':'https://www.themealdb.com/images/media/meals/x0lk931587671540.jpg','Diavola':'https://www.themealdb.com/images/media/meals/x0lk931587671540.jpg','Calzone':'https://www.themealdb.com/images/media/meals/x0lk931587671540.jpg','Spaghetti Bolognese':'https://www.themealdb.com/images/media/meals/sutysw1468247559.jpg','Classic Smash Burger':'https://www.themealdb.com/images/media/meals/urzj1d1587670726.jpg','BBQ Bacon Burger':'https://www.themealdb.com/images/media/meals/urzj1d1587670726.jpg','Crispy Chicken Burger':'https://www.themealdb.com/images/media/meals/xvrrux1511783685.jpg','Veggie Burger':'https://www.themealdb.com/images/media/meals/urzj1d1587670726.jpg','California Roll (8)':'https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg','Dragon Roll (8)':'https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg','Rainbow Roll (8)':'https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg','Nigiri Set (10 Stk.)':'https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg','Döner im Dürüm':'https://www.themealdb.com/images/media/meals/svprys1511176755.jpg','Adana Kebab Teller':'https://www.themealdb.com/images/media/meals/svprys1511176755.jpg','Pad Thai':'https://www.themealdb.com/images/media/meals/uuuspp1511297945.jpg','Butter Chicken':'https://www.themealdb.com/images/media/meals/1bsv1q1560459826.jpg','Burrito Grande':'https://www.themealdb.com/images/media/meals/uvuyxu1503067369.jpg','Souvlaki Teller':'https://www.themealdb.com/images/media/meals/y3l4vt1683207418.jpg','BBQ Ribs (500g)':'https://www.themealdb.com/images/media/meals/xvrrux1511783685.jpg','Vegan Buddha Bowl':'https://www.themealdb.com/images/media/meals/wxywrq1468235067.jpg','Falafel Teller':'https://www.themealdb.com/images/media/meals/y3l4vt1683207418.jpg','Tonkotsu Ramen':'https://www.themealdb.com/images/media/meals/wuxrtu1483564410.jpg','Moussaka':'https://www.themealdb.com/images/media/meals/ctg8jd1585563097.jpg','Tiramisù':'https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg','Panna Cotta':'https://www.themealdb.com/images/media/meals/xqwwpy1483908697.jpg','Gelato (2 Kugeln)':'https://www.themealdb.com/images/media/meals/xqwwpy1483908697.jpg','Brownie mit Eis':'https://www.themealdb.com/images/media/meals/tlysuu1573650626.jpg','Cheesecake Slice':'https://www.themealdb.com/images/media/meals/qpxvuq1511798906.jpg','Mochi Eis (3 Stk.)':'https://www.themealdb.com/images/media/meals/xqwwpy1483908697.jpg','Dorayaki':'https://www.themealdb.com/images/media/meals/xqwwpy1483908697.jpg','Baklava (3 Stk.)':'https://www.themealdb.com/images/media/meals/zrxppu1511789302.jpg','Gulab Jamun (3 Stk.)':'https://www.themealdb.com/images/media/meals/xqwwpy1483908697.jpg','Kulfi Mango':'https://www.themealdb.com/images/media/meals/xqwwpy1483908697.jpg','Churros (5 Stk.)':'https://www.themealdb.com/images/media/meals/xqwwpy1483908697.jpg','Mango Klebreis':'https://www.themealdb.com/images/media/meals/xqwwpy1483908697.jpg','Crème Brûlée':'https://www.themealdb.com/images/media/meals/xqwwpy1483908697.jpg','Waffel mit Eis':'https://www.themealdb.com/images/media/meals/xqwwpy1483908697.jpg','Schokoladen-Fondant':'https://www.themealdb.com/images/media/meals/tlysuu1573650626.jpg','Matcha Cheesecake':'https://www.themealdb.com/images/media/meals/qpxvuq1511798906.jpg','Galaktoboureko':'https://www.themealdb.com/images/media/meals/zrxppu1511789302.jpg','Tres Leches':'https://www.themealdb.com/images/media/meals/qpxvuq1511798906.jpg','Vegan Nice Cream':'https://www.themealdb.com/images/media/meals/xqwwpy1483908697.jpg','Pommes Frites':'https://www.themealdb.com/images/media/meals/urzj1d1587670726.jpg'};
+const allDishes=[
+{name:'Bruschetta',desc:'Röstbrot, Tomaten, Basilikum, Knoblauch',price:5.90,emoji:'🍞',cuisine:['pizza','alle'],course:'vorspeisen'},
+{name:'Caprese',desc:'Büffelmozzarella, Tomaten, Basilikum, Olivenöl',price:6.90,emoji:'🧀',cuisine:['pizza','alle'],course:'vorspeisen'},
+{name:'Antipasti Teller',desc:'Gegrilltes Gemüse, Oliven, Aufschnitt',price:8.90,emoji:'🫒',cuisine:['pizza','alle'],course:'vorspeisen'},
+{name:'Burrata',desc:'Cremige Burrata, Pesto, Cherrytomaten',price:9.90,emoji:'🧀',cuisine:['pizza','alle'],course:'vorspeisen'},
+{name:'Chicken Wings',desc:'6 Stk., BBQ oder Hot Buffalo',price:7.90,emoji:'🍗',cuisine:['burger','american','alle'],course:'vorspeisen'},
+{name:'Mozzarella Sticks',desc:'6 Stk. mit Marinara-Dip',price:5.90,emoji:'🧀',cuisine:['burger','american','alle'],course:'vorspeisen'},
+{name:'Loaded Nachos',desc:'Käse, Jalapeños, Guacamole, Sauerrahm',price:8.50,emoji:'🌮',cuisine:['burger','mexiko','alle'],course:'vorspeisen'},
+{name:'Edamame',desc:'Gedämpfte Sojabohnen, Meersalz',price:3.90,emoji:'🫘',cuisine:['sushi','asiatisch','alle'],course:'vorspeisen'},
+{name:'Miso-Suppe',desc:'Tofu, Wakame, Frühlingszwiebeln',price:3.50,emoji:'🍲',cuisine:['sushi','asiatisch','alle'],course:'vorspeisen'},
+{name:'Gyoza (6 Stk.)',desc:'Gebratene Teigtaschen, Hähnchen oder Gemüse',price:6.90,emoji:'🥟',cuisine:['sushi','asiatisch','alle'],course:'vorspeisen'},
+{name:'Hummus & Fladenbrot',desc:'Kichererbsenpüree, Olivenöl, Paprika',price:4.90,emoji:'🫙',cuisine:['döner','griechisch','indisch','alle'],course:'vorspeisen'},
+{name:'Tzatziki & Pita',desc:'Joghurt, Gurke, Knoblauch, Dill',price:4.50,emoji:'🥒',cuisine:['griechisch','alle'],course:'vorspeisen'},
+{name:'Taboulé Salat',desc:'Petersilie, Bulgur, Tomate, Zitrone',price:5.50,emoji:'🥗',cuisine:['döner','griechisch','alle'],course:'vorspeisen'},
+{name:'Samosa (2 Stk.)',desc:'Frittiert, Kartoffel-Erbsen-Füllung',price:4.90,emoji:'🥟',cuisine:['indisch','alle'],course:'vorspeisen'},
+{name:'Onion Bhaji (4 Stk.)',desc:'Knusprige Zwiebelküchlein, Minzchutney',price:5.50,emoji:'🧅',cuisine:['indisch','alle'],course:'vorspeisen'},
+{name:'Guacamole & Chips',desc:'Avocado, Koriander, Limette, Jalapeño',price:6.50,emoji:'🥑',cuisine:['mexiko','alle'],course:'vorspeisen'},
+{name:'Frühlingsrollen (4)',desc:'Knusprig frittiert, Süß-Sauer-Dip',price:5.50,emoji:'🥢',cuisine:['asiatisch','alle'],course:'vorspeisen'},
+{name:'Pappadum & Chutneys',desc:'Linsencracker, Mango- und Minzchutney',price:3.50,emoji:'🫓',cuisine:['indisch','alle'],course:'vorspeisen'},
+{name:'Tacos de Queso (3)',desc:'Corn-Tortilla, Käse, Salsa, Koriander',price:7.50,emoji:'🌮',cuisine:['mexiko','alle'],course:'vorspeisen'},
+{name:'Vegan Spring Rolls',desc:'Tofu, Gemüse, Reispapier, Erdnussdip',price:6.90,emoji:'🌯',cuisine:['vegan','alle'],course:'vorspeisen'},
+{name:'Margherita',desc:'Tomatensoße, Mozzarella, Basilikum',price:8.90,emoji:'🍕',cuisine:['pizza','alle'],course:'hauptgerichte'},
+{name:'Salami Pizza',desc:'Tomatensoße, Mozzarella, Mailänder Salami',price:10.90,emoji:'🍕',cuisine:['pizza','alle'],course:'hauptgerichte'},
+{name:'Quattro Stagioni',desc:'Schinken, Artischocken, Oliven, Champignons',price:12.90,emoji:'🍕',cuisine:['pizza','alle'],course:'hauptgerichte'},
+{name:'Diavola',desc:'Scharfe Salami, Jalapeños, Chiliöl',price:12.50,emoji:'🌶️',cuisine:['pizza','alle'],course:'hauptgerichte'},
+{name:'Calzone',desc:'Gefüllt: Ricotta, Schinken, Mozzarella',price:13.50,emoji:'🫔',cuisine:['pizza','alle'],course:'hauptgerichte'},
+{name:'Spaghetti Bolognese',desc:'Klassische Hackfleischsoße, Parmesan',price:9.90,emoji:'🍝',cuisine:['pizza','alle'],course:'hauptgerichte'},
+{name:'Classic Smash Burger',desc:'Rindfleisch, Salat, Tomate, Senf, Cheddar',price:9.90,emoji:'🍔',cuisine:['burger','american','alle'],course:'hauptgerichte'},
+{name:'BBQ Bacon Burger',desc:'Bacon, Cheddar, BBQ-Soße, Crispy Onions',price:12.90,emoji:'🍔',cuisine:['burger','american','alle'],course:'hauptgerichte'},
+{name:'Crispy Chicken Burger',desc:'Paniertes Hähnchen, Coleslaw, Pickle',price:11.90,emoji:'🍗',cuisine:['burger','american','alle'],course:'hauptgerichte'},
+{name:'Veggie Burger',desc:'Schwarze-Bohnen-Pattie, Avocado, Sprossen',price:10.90,emoji:'🌱',cuisine:['burger','vegan','alle'],course:'hauptgerichte'},
+{name:'California Roll (8)',desc:'Avocado, Krebsfleisch, Gurke',price:8.90,emoji:'🌀',cuisine:['sushi','alle'],course:'hauptgerichte'},
+{name:'Dragon Roll (8)',desc:'Garnele Tempura, Avocado, Tobiko',price:13.90,emoji:'🐉',cuisine:['sushi','alle'],course:'hauptgerichte'},
+{name:'Rainbow Roll (8)',desc:'5 Fischsorten, bunt glasiert',price:14.90,emoji:'🌈',cuisine:['sushi','alle'],course:'hauptgerichte'},
+{name:'Nigiri Set (10 Stk.)',desc:'Lachs, Thunfisch, Garnele, Hamachi, Ebi',price:17.90,emoji:'🍣',cuisine:['sushi','alle'],course:'hauptgerichte'},
+{name:'Döner im Dürüm',desc:'Rindfleisch, Salat, Tomaten, Kräutersoße',price:8.50,emoji:'🌯',cuisine:['döner','alle'],course:'hauptgerichte'},
+{name:'Adana Kebab Teller',desc:'Scharfes Lammhack am Spieß, Reis, Salat',price:13.90,emoji:'🍢',cuisine:['döner','griechisch','alle'],course:'hauptgerichte'},
+{name:'Pad Thai',desc:'Reisnudeln, Ei, Erdnüsse, Tamarinde',price:11.90,emoji:'🍜',cuisine:['asiatisch','alle'],course:'hauptgerichte'},
+{name:'Butter Chicken',desc:'Hähnchen in cremiger Tomatencurrysoße',price:13.90,emoji:'🍛',cuisine:['indisch','alle'],course:'hauptgerichte'},
+{name:'Burrito Grande',desc:'Rind, Bohnen, Käse, Salsa, Sauerrahm',price:11.90,emoji:'🌯',cuisine:['mexiko','alle'],course:'hauptgerichte'},
+{name:'Souvlaki Teller',desc:'Gegrilltes Hähnchen, Pita, Tzatziki, Salat',price:13.50,emoji:'🥙',cuisine:['griechisch','alle'],course:'hauptgerichte'},
+{name:'BBQ Ribs (500g)',desc:'Langsam gegart, Smokey BBQ-Soße, Coleslaw',price:18.90,emoji:'🥩',cuisine:['american','alle'],course:'hauptgerichte'},
+{name:'Vegan Buddha Bowl',desc:'Quinoa, Avocado, Kichererbsen, Tahini',price:12.90,emoji:'🥗',cuisine:['vegan','alle'],course:'hauptgerichte'},
+{name:'Falafel Teller',desc:'6 Stk., Hummus, Salat, Fladenbrot',price:9.90,emoji:'🧆',cuisine:['döner','vegan','alle'],course:'hauptgerichte'},
+{name:'Tonkotsu Ramen',desc:'Schweinebrühe, Chashu, Nori, weiches Ei',price:13.90,emoji:'🍜',cuisine:['asiatisch','sushi','alle'],course:'hauptgerichte'},
+{name:'Moussaka',desc:'Aubergine, Hackfleisch, Béchamelsoße',price:13.90,emoji:'🥘',cuisine:['griechisch','alle'],course:'hauptgerichte'},
+{name:'Tiramisù',desc:'Mascarpone, Espresso, Löffelbiskuit',price:5.90,emoji:'🍰',cuisine:['pizza','alle'],course:'desserts'},
+{name:'Panna Cotta',desc:'Mit Beerencoulis',price:4.90,emoji:'🍮',cuisine:['pizza','alle'],course:'desserts'},
+{name:'Gelato (2 Kugeln)',desc:'Vanille, Schokolade, Pistazie oder Erdbeer',price:3.90,emoji:'🍦',cuisine:['pizza','alle'],course:'desserts'},
+{name:'Brownie mit Eis',desc:'Warmer Schokoladenbrownie, Vanilleeis',price:5.90,emoji:'🍫',cuisine:['burger','american','alle'],course:'desserts'},
+{name:'Cheesecake Slice',desc:'New York Style, Beerentopping',price:4.50,emoji:'🍰',cuisine:['burger','american','alle'],course:'desserts'},
+{name:'Mochi Eis (3 Stk.)',desc:'Matcha, Mango oder Erdbeere',price:5.90,emoji:'🍡',cuisine:['sushi','asiatisch','alle'],course:'desserts'},
+{name:'Dorayaki',desc:'Japanische Pfannkuchen, Anko-Füllung',price:4.50,emoji:'🥞',cuisine:['sushi','asiatisch','alle'],course:'desserts'},
+{name:'Baklava (3 Stk.)',desc:'Blätterteig, Pistazie, Honigsirup',price:4.90,emoji:'🍯',cuisine:['döner','griechisch','alle'],course:'desserts'},
+{name:'Gulab Jamun (3 Stk.)',desc:'Milchteigbällchen in Rosensirup',price:4.50,emoji:'🍡',cuisine:['indisch','alle'],course:'desserts'},
+{name:'Kulfi Mango',desc:'Indisches Eis am Stiel',price:4.90,emoji:'🍧',cuisine:['indisch','alle'],course:'desserts'},
+{name:'Churros (5 Stk.)',desc:'Zimtzucker, Schokoladendip',price:5.50,emoji:'🥐',cuisine:['mexiko','alle'],course:'desserts'},
+{name:'Mango Klebreis',desc:'Thai-Dessert mit Kokosmilch',price:5.90,emoji:'🥭',cuisine:['asiatisch','alle'],course:'desserts'},
+{name:'Crème Brûlée',desc:'Karamellisiert, Vanille',price:5.90,emoji:'🍮',cuisine:['alle'],course:'desserts'},
+{name:'Waffel mit Eis',desc:'Belgische Waffel, 2 Kugeln Eis, Sahne',price:5.90,emoji:'🧇',cuisine:['alle'],course:'desserts'},
+{name:'Schokoladen-Fondant',desc:'Flüssiger Kern, Vanilleeis',price:6.50,emoji:'🍫',cuisine:['alle'],course:'desserts'},
+{name:'Matcha Cheesecake',desc:'Japanisch, leicht bitter-süß',price:5.90,emoji:'🍰',cuisine:['sushi','asiatisch','alle'],course:'desserts'},
+{name:'Galaktoboureko',desc:'Griechische Grießcreme im Blätterteig',price:5.50,emoji:'🍯',cuisine:['griechisch','alle'],course:'desserts'},
+{name:'Tres Leches',desc:'Mexikanischer Milchkuchen',price:5.50,emoji:'🍰',cuisine:['mexiko','alle'],course:'desserts'},
+{name:'Vegan Nice Cream',desc:'Bananeneis, Mango oder Erdbeere',price:4.90,emoji:'🍦',cuisine:['vegan','alle'],course:'desserts'},
+{name:'Cola 0,5l',desc:'Kalt, mit Eis',price:2.50,emoji:'🥤',cuisine:['alle'],course:'getraenke'},
+{name:'Fanta / Sprite 0,5l',desc:'',price:2.50,emoji:'🍊',cuisine:['alle'],course:'getraenke'},
+{name:'Wasser still 0,5l',desc:'',price:1.80,emoji:'💧',cuisine:['alle'],course:'getraenke'},
+{name:'Wasser sprudelnd',desc:'0,5l',price:1.80,emoji:'🫧',cuisine:['alle'],course:'getraenke'},
+{name:'Frischer OJ 0,3l',desc:'Frisch gepresster Orangensaft',price:3.50,emoji:'🍊',cuisine:['alle'],course:'getraenke'},
+{name:'Limonata hausgemacht',desc:'Zitrone, Minze, Zucker',price:3.90,emoji:'🍋',cuisine:['pizza','alle'],course:'getraenke'},
+{name:'Chianti 0,25l',desc:'Toskanischer Rotwein',price:6.90,emoji:'🍷',cuisine:['pizza','alle'],course:'getraenke'},
+{name:'Craft Beer 0,33l',desc:'IPA oder Pale Ale',price:3.90,emoji:'🍺',cuisine:['burger','american','alle'],course:'getraenke'},
+{name:'Milkshake Vanille',desc:'300 ml, extra cremig',price:4.90,emoji:'🥛',cuisine:['burger','american','alle'],course:'getraenke'},
+{name:'Grüner Tee kalt',desc:'0,5l, ungesüßt',price:2.90,emoji:'🍵',cuisine:['sushi','asiatisch','alle'],course:'getraenke'},
+{name:'Sake 0,1l',desc:'Trocken, warm oder kalt',price:4.90,emoji:'🍶',cuisine:['sushi','alle'],course:'getraenke'},
+{name:'Asahi Bier 0,33l',desc:'Japanisches Lagerbier',price:4.50,emoji:'🍺',cuisine:['sushi','asiatisch','alle'],course:'getraenke'},
+{name:'Ayran 0,5l',desc:'Türkisches Joghurtgetränk',price:2.00,emoji:'🥛',cuisine:['döner','alle'],course:'getraenke'},
+{name:'Çay (Türk. Tee)',desc:'Schwarztee, traditionell',price:1.50,emoji:'🍵',cuisine:['döner','alle'],course:'getraenke'},
+{name:'Mango Lassi 0,3l',desc:'Joghurt, Mango',price:3.90,emoji:'🥭',cuisine:['indisch','alle'],course:'getraenke'},
+{name:'Masala Chai',desc:'Schwarztee, Gewürze, Milch',price:2.90,emoji:'☕',cuisine:['indisch','alle'],course:'getraenke'},
+{name:'Horchata 0,4l',desc:'Mexikanisches Reismilchgetränk, Zimt',price:3.50,emoji:'🥤',cuisine:['mexiko','alle'],course:'getraenke'},
+{name:'Ouzo 0,04l',desc:'Griechischer Anisschnaps',price:3.90,emoji:'🥃',cuisine:['griechisch','alle'],course:'getraenke'},
+{name:'Bubble Tea',desc:'Taro oder Mango, Tapioka-Perlen',price:4.90,emoji:'🧋',cuisine:['asiatisch','alle'],course:'getraenke'},
+{name:'Espresso',desc:'',price:1.90,emoji:'☕',cuisine:['pizza','alle'],course:'getraenke'},
+{name:'Extra Mozzarella',desc:'',price:1.50,emoji:'🧀',cuisine:['pizza','alle'],course:'extras'},
+{name:'Extra Salami',desc:'',price:1.50,emoji:'🍖',cuisine:['pizza','alle'],course:'extras'},
+{name:'Knoblauchbrot (2)',desc:'Mit Butter',price:2.50,emoji:'🍞',cuisine:['pizza','alle'],course:'extras'},
+{name:'Extra Bacon',desc:'2 Streifen',price:1.50,emoji:'🥓',cuisine:['burger','american','alle'],course:'extras'},
+{name:'Extra Käse',desc:'Cheddar oder Gruyère',price:1.00,emoji:'🧀',cuisine:['burger','alle'],course:'extras'},
+{name:'Avocado Extra',desc:'Frische Scheiben',price:1.50,emoji:'🥑',cuisine:['burger','vegan','alle'],course:'extras'},
+{name:'Extra Wasabi',desc:'',price:0.50,emoji:'🌿',cuisine:['sushi','alle'],course:'extras'},
+{name:'Sojasoße extra',desc:'Normal oder Low Sodium',price:0.50,emoji:'🫙',cuisine:['sushi','asiatisch','alle'],course:'extras'},
+{name:'Extra Fladenbrot',desc:'',price:1.00,emoji:'🫓',cuisine:['döner','griechisch','alle'],course:'extras'},
+{name:'Scharfe Soße',desc:'Chili oder Harissa',price:0.50,emoji:'🌶️',cuisine:['döner','alle'],course:'extras'},
+{name:'Extra Naan',desc:'Aus dem Tandoor-Ofen',price:2.00,emoji:'🫓',cuisine:['indisch','alle'],course:'extras'},
+{name:'Raita',desc:'Joghurt-Gurken-Dip',price:1.50,emoji:'🥒',cuisine:['indisch','alle'],course:'extras'},
+{name:'Extra Guacamole',desc:'',price:1.50,emoji:'🥑',cuisine:['mexiko','alle'],course:'extras'},
+{name:'Jalapeños extra',desc:'',price:0.80,emoji:'🌶️',cuisine:['mexiko','burger','alle'],course:'extras'},
+{name:'Dip-Soße',desc:'BBQ, Ranch, Knoblauch oder Ketchup',price:0.80,emoji:'🫙',cuisine:['burger','american','alle'],course:'extras'},
+{name:'Pommes Frites',desc:'Portion',price:3.90,emoji:'🍟',cuisine:['burger','american','alle'],course:'extras'},
+{name:'Extra Reis',desc:'Basmati oder Jasminreis',price:2.00,emoji:'🍚',cuisine:['asiatisch','indisch','alle'],course:'extras'},
+{name:'Sesam-Dressing',desc:'',price:1.00,emoji:'🫙',cuisine:['sushi','asiatisch','alle'],course:'extras'},
+{name:'Pita-Brot extra',desc:'2 Stück',price:1.50,emoji:'🫓',cuisine:['griechisch','döner','alle'],course:'extras'},
+{name:'Extra scharf',desc:'Auf Wunsch – kostenfrei',price:0.00,emoji:'🔥',cuisine:['alle'],course:'extras'}
 ];
 
-const courses = [
-  { id:'vorspeisen',    label:'🥗 Vorspeisen' },
-  { id:'hauptgerichte', label:'🍽️ Hauptgerichte' },
-  { id:'desserts',      label:'🍰 Desserts' },
-  { id:'getraenke',     label:'🥤 Getränke' },
-  { id:'extras',        label:'➕ Extras' },
-];
+let activeCuisine='alle', activeCourse='hauptgerichte', cart=[];
 
-const dishPhotos = {
-  // VORSPEISEN
-  'Bruschetta':           'https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=400&h=300&fit=crop',
-  'Caprese':              'https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=400&h=300&fit=crop',
-  'Antipasti Teller':     'https://images.unsplash.com/photo-1626200419199-391ae4be7a41?w=400&h=300&fit=crop',
-  'Burrata':              'https://images.unsplash.com/photo-1626957341926-98752fc2ba90?w=400&h=300&fit=crop',
-  'Chicken Wings':        'https://www.themealdb.com/images/media/meals/xvrrux1511783685.jpg',
-  'Mozzarella Sticks':    'https://images.unsplash.com/photo-1531749668029-2db88e4276c7?w=400&h=300&fit=crop',
-  'Loaded Nachos':        'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=400&h=300&fit=crop',
-  'Edamame':              'https://images.unsplash.com/photo-1564894809611-1742fc40ed80?w=400&h=300&fit=crop',
-  'Miso-Suppe':           'https://images.unsplash.com/photo-1607301406259-dfb186e15de8?w=400&h=300&fit=crop',
-  'Gyoza (6 Stk.)':       'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=400&h=300&fit=crop',
-  'Hummus & Fladenbrot':  'https://images.unsplash.com/photo-1577805947697-89e18249d767?w=400&h=300&fit=crop',
-  'Tzatziki & Pita':      'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?w=400&h=300&fit=crop',
-  'Taboul\u00e9 Salat':   'https://images.unsplash.com/photo-1534940519139-f860fb3c6e38?w=400&h=300&fit=crop',
-  'Samosa (2 Stk.)':      'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&h=300&fit=crop',
-  'Onion Bhaji (4 Stk.)': 'https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?w=400&h=300&fit=crop',
-  'Guacamole & Chips':    'https://images.unsplash.com/photo-1600335895229-6e75511892c8?w=400&h=300&fit=crop',
-  'Fr\u00fchlingsrollen (4)': 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop',
-  'Pappadum & Chutneys':  'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=300&fit=crop',
-  'Tacos de Queso (3)':   'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400&h=300&fit=crop',
-  'Vegan Spring Rolls':   'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&h=300&fit=crop',
-  // HAUPTGERICHTE
-  'Margherita':           'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=300&fit=crop',
-  'Salami Pizza':         'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop',
-  'Quattro Stagioni':     'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop',
-  'Diavola':              'https://images.unsplash.com/photo-1458642849426-cfb724f15ef7?w=400&h=300&fit=crop',
-  'Calzone':              'https://images.unsplash.com/photo-1536964549204-cce9eab227bd?w=400&h=300&fit=crop',
-  'Spaghetti Bolognese':  'https://images.unsplash.com/photo-1622973536968-3ead9e780960?w=400&h=300&fit=crop',
-  'Classic Smash Burger': 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop',
-  'BBQ Bacon Burger':     'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&h=300&fit=crop',
-  'Crispy Chicken Burger':'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&h=300&fit=crop',
-  'Veggie Burger':        'https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=400&h=300&fit=crop',
-  'California Roll (8)':  'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400&h=300&fit=crop',
-  'Dragon Roll (8)':      'https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?w=400&h=300&fit=crop',
-  'Rainbow Roll (8)':     'https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=400&h=300&fit=crop',
-  'Nigiri Set (10 Stk.)': 'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=400&h=300&fit=crop',
-  'D\u00f6ner im D\u00fcr\u00fcm': 'https://images.unsplash.com/photo-1530469912745-a215c6b256ea?w=400&h=300&fit=crop',
-  'Adana Kebab Teller':   'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop',
-  'Pad Thai':             'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400&h=300&fit=crop',
-  'Butter Chicken':       'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&h=300&fit=crop',
-  'Burrito Grande':       'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&h=300&fit=crop',
-  'Souvlaki Teller':      'https://images.unsplash.com/photo-1529694157872-4e0c0f3b238b?w=400&h=300&fit=crop',
-  'BBQ Ribs (500g)':      'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop',
-  'Vegan Buddha Bowl':    'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop',
-  'Falafel Teller':       'https://images.unsplash.com/photo-1547058881-aa0edd92aab3?w=400&h=300&fit=crop',
-  'Tonkotsu Ramen':       'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop',
-  'Moussaka':             'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=300&fit=crop',
-  // DESSERTS
-  'Tiramis\u00f9':        'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop',
-  'Panna Cotta':          'https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg',
-  'Gelato (2 Kugeln)':    'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=400&h=300&fit=crop',
-  'Brownie mit Eis':      'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&h=300&fit=crop',
-  'Milkshake Dessert':    'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400&h=300&fit=crop',
-  'Cheesecake Slice':     'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400&h=300&fit=crop',
-  'Mochi Eis (3 Stk.)':   'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=300&fit=crop',
-  'Dorayaki':             'https://images.unsplash.com/photo-1567103472667-6898f3a79cf2?w=400&h=300&fit=crop',
-  'Baklava (3 Stk.)':     'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=400&h=300&fit=crop',
-  'Gulab Jamun (3 Stk.)': 'https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?w=400&h=300&fit=crop',
-  'Kulfi Mango':          'https://images.unsplash.com/photo-1516559828984-fb3b99548b21?w=400&h=300&fit=crop',
-  'Churros (5 Stk.)':     'https://images.unsplash.com/photo-1526081715791-7c538f86060e?w=400&h=300&fit=crop',
-  'Mango Klebreis':       'https://images.unsplash.com/photo-1617093727343-374698b1b08d?w=400&h=300&fit=crop',
-  'Crème Brûlée': 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=300&fit=crop',
-  'Waffel mit Eis':       'https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=400&h=300&fit=crop',
-  'Schokoladen-Fondant':  'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&h=300&fit=crop',
-  'Matcha Cheesecake':    'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop',
-  'Galaktoboureko':       'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=400&h=300&fit=crop',
-  'Tres Leches':          'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=400&h=300&fit=crop',
-  'Vegan Nice Cream':     'https://images.unsplash.com/photo-1557142046-c704a3adf364?w=400&h=300&fit=crop',
-  // GETRAENKE
-  'Cola 0,5l':            'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&h=300&fit=crop',
-  'Fanta / Sprite 0,5l':  'https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400&h=300&fit=crop',
-  'Wasser still 0,5l':    'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400&h=300&fit=crop',
-  'Wasser sprudelnd':     'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=300&fit=crop',
-  'Frischer OJ 0,3l':     'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&h=300&fit=crop',
-  'Limonata hausgemacht': 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=400&h=300&fit=crop',
-  'Chianti 0,25l':        'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&h=300&fit=crop',
-  'Craft Beer 0,33l':     'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400&h=300&fit=crop',
-  'Milkshake Vanille':    'https://images.unsplash.com/photo-1577805947697-89e18249d767?w=400&h=300&fit=crop',
-  'Gr\u00fcner Tee kalt': 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop',
-  'Sake 0,1l':            'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400&h=300&fit=crop',
-  'Asahi Bier 0,33l':     'https://images.unsplash.com/photo-1535958636474-b021ee887b13?w=400&h=300&fit=crop',
-  'Ayran 0,5l':           'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&h=300&fit=crop',
-  '\u00c7ay (T\u00fcrk. Tee)': 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&h=300&fit=crop',
-  'Mango Lassi 0,3l':     'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=400&h=300&fit=crop',
-  'Masala Chai':          'https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=400&h=300&fit=crop',
-  'Horchata 0,4l':        'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400&h=300&fit=crop',
-  'Ouzo 0,04l':           'https://images.unsplash.com/photo-1612528443702-f6741f70a049?w=400&h=300&fit=crop',
-  'Bubble Tea':           'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
-  'Espresso':             'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=400&h=300&fit=crop',
-  // EXTRAS
-  'Extra Mozzarella':     'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400&h=300&fit=crop',
-  'Extra Salami':         'https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=400&h=300&fit=crop',
-  'Knoblauchbrot (2)':    'https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?w=400&h=300&fit=crop',
-  'Extra Bacon':          'https://images.unsplash.com/photo-1528607929212-2636ec44253e?w=400&h=300&fit=crop',
-  'Extra K\u00e4se':      'https://images.unsplash.com/photo-1552767059-ce182ead6c1b?w=400&h=300&fit=crop',
-  'Avocado Extra':        'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400&h=300&fit=crop',
-  'Extra Wasabi':         'https://images.unsplash.com/photo-1553621042-f6e147245754?w=400&h=300&fit=crop',
-  'Sojaso\u00dfe extra':  'https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400&h=300&fit=crop',
-  'Extra Fladenbrot':     'https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=400&h=300&fit=crop',
-  'Scharfe So\u00dfe':    'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&h=300&fit=crop',
-  'Extra Naan':           'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=300&fit=crop',
-  'Raita':                'https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?w=400&h=300&fit=crop',
-  'Extra Guacamole':      'https://images.unsplash.com/photo-1600335895229-6e75511892c8?w=400&h=300&fit=crop',
-  'Jalape\u00f1os extra': 'https://images.unsplash.com/photo-1526346698789-22fd84314424?w=400&h=300&fit=crop',
-  'Dip-So\u00dfe':        'https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=400&h=300&fit=crop',
-  'Pommes Frites':        'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=400&h=300&fit=crop',
-  'Extra Reis':           'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=400&h=300&fit=crop',
-  'Sesam-Dressing':       'https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400&h=300&fit=crop',
-  'Pita-Brot extra':      'https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=400&h=300&fit=crop',
-  'Extra scharf':         'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&h=300&fit=crop',
-};
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function fmtPrice(p){return p.toFixed(2).replace('.',',');}
+function safeName(n){return encodeURIComponent(n);}
 
-const allDishes = [
-  // VORSPEISEN
-  { name:'Bruschetta',           desc:'Röstbrot, Tomaten, Basilikum, Knoblauch',         price:5.90,  emoji:'🍞', cuisine:['pizza','alle'],              course:'vorspeisen' },
-  { name:'Caprese',              desc:'Büffelmozzarella, Tomaten, Basilikum, Olivenöl',  price:6.90,  emoji:'🧀', cuisine:['pizza','alle'],              course:'vorspeisen' },
-  { name:'Antipasti Teller',     desc:'Gegrilltes Gemüse, Oliven, Aufschnitt',           price:8.90,  emoji:'🫒', cuisine:['pizza','alle'],              course:'vorspeisen' },
-  { name:'Burrata',              desc:'Cremige Burrata, Pesto, Cherrytomaten',           price:9.90,  emoji:'🧀', cuisine:['pizza','alle'],              course:'vorspeisen' },
-  { name:'Chicken Wings',        desc:'6 Stk., BBQ oder Hot Buffalo',                   price:7.90,  emoji:'🍗', cuisine:['burger','american','alle'],   course:'vorspeisen' },
-  { name:'Mozzarella Sticks',    desc:'6 Stk. mit Marinara-Dip',                        price:5.90,  emoji:'🧀', cuisine:['burger','american','alle'],   course:'vorspeisen' },
-  { name:'Loaded Nachos',        desc:'Käse, Jalapeños, Guacamole, Sauerrahm',          price:8.50,  emoji:'🌮', cuisine:['burger','mexiko','alle'],     course:'vorspeisen' },
-  { name:'Edamame',              desc:'Gedämpfte Sojabohnen, Meersalz',                 price:3.90,  emoji:'🫘', cuisine:['sushi','asiatisch','alle'],   course:'vorspeisen' },
-  { name:'Miso-Suppe',           desc:'Tofu, Wakame, Frühlingszwiebeln',                price:3.50,  emoji:'🍲', cuisine:['sushi','asiatisch','alle'],   course:'vorspeisen' },
-  { name:'Gyoza (6 Stk.)',       desc:'Gebratene Teigtaschen, Hähnchen oder Gemüse',    price:6.90,  emoji:'🥟', cuisine:['sushi','asiatisch','alle'],   course:'vorspeisen' },
-  { name:'Hummus & Fladenbrot',  desc:'Kichererbsenpüree, Olivenöl, Paprika',           price:4.90,  emoji:'🫙', cuisine:['döner','griechisch','indisch','alle'], course:'vorspeisen' },
-  { name:'Tzatziki & Pita',      desc:'Joghurt, Gurke, Knoblauch, Dill',               price:4.50,  emoji:'🥒', cuisine:['griechisch','alle'],          course:'vorspeisen' },
-  { name:'Taboulé Salat',        desc:'Petersilie, Bulgur, Tomate, Zitrone',            price:5.50,  emoji:'🥗', cuisine:['döner','griechisch','alle'],  course:'vorspeisen' },
-  { name:'Samosa (2 Stk.)',      desc:'Frittiert, Kartoffel-Erbsen-Füllung',            price:4.90,  emoji:'🥟', cuisine:['indisch','alle'],             course:'vorspeisen' },
-  { name:'Onion Bhaji (4 Stk.)', desc:'Knusprige Zwiebelküchlein, Minzchutney',         price:5.50,  emoji:'🧅', cuisine:['indisch','alle'],             course:'vorspeisen' },
-  { name:'Guacamole & Chips',    desc:'Avocado, Koriander, Limette, Jalapeño',          price:6.50,  emoji:'🥑', cuisine:['mexiko','alle'],              course:'vorspeisen' },
-  { name:'Frühlingsrollen (4)',  desc:'Knusprig frittiert, Süß-Sauer-Dip',              price:5.50,  emoji:'🥢', cuisine:['asiatisch','alle'],           course:'vorspeisen' },
-  { name:'Pappadum & Chutneys',  desc:'Linsencracker, Mango- und Minzchutney',          price:3.50,  emoji:'🫓', cuisine:['indisch','alle'],             course:'vorspeisen' },
-  { name:'Tacos de Queso (3)',   desc:'Corn-Tortilla, Käse, Salsa, Koriander',          price:7.50,  emoji:'🌮', cuisine:['mexiko','alle'],              course:'vorspeisen' },
-  { name:'Vegan Spring Rolls',   desc:'Tofu, Gemüse, Reispapier, Erdnussdip',           price:6.90,  emoji:'🌯', cuisine:['vegan','alle'],               course:'vorspeisen' },
-
-  // HAUPTGERICHTE
-  { name:'Margherita',           desc:'Tomatensoße, Mozzarella, Basilikum',             price:8.90,  emoji:'🍕', cuisine:['pizza','alle'],              course:'hauptgerichte' },
-  { name:'Salami Pizza',         desc:'Tomatensoße, Mozzarella, Mailänder Salami',      price:10.90, emoji:'🍕', cuisine:['pizza','alle'],              course:'hauptgerichte' },
-  { name:'Quattro Stagioni',     desc:'Schinken, Artischocken, Oliven, Champignons',    price:12.90, emoji:'🍕', cuisine:['pizza','alle'],              course:'hauptgerichte' },
-  { name:'Diavola',              desc:'Scharfe Salami, Jalapeños, Chiliöl',             price:12.50, emoji:'🌶️', cuisine:['pizza','alle'],              course:'hauptgerichte' },
-  { name:'Calzone',              desc:'Gefüllt: Ricotta, Schinken, Mozzarella',         price:13.50, emoji:'🫔', cuisine:['pizza','alle'],              course:'hauptgerichte' },
-  { name:'Spaghetti Bolognese',  desc:'Klassische Hackfleischsoße, Parmesan',           price:9.90,  emoji:'🍝', cuisine:['pizza','alle'],              course:'hauptgerichte' },
-  { name:'Classic Smash Burger', desc:'Rindfleisch, Salat, Tomate, Senf, Cheddar',     price:9.90,  emoji:'🍔', cuisine:['burger','american','alle'],   course:'hauptgerichte' },
-  { name:'BBQ Bacon Burger',     desc:'Bacon, Cheddar, BBQ-Soße, Crispy Onions',       price:12.90, emoji:'🍔', cuisine:['burger','american','alle'],   course:'hauptgerichte' },
-  { name:'Crispy Chicken Burger',desc:'Paniertes Hähnchen, Coleslaw, Pickle',           price:11.90, emoji:'🍗', cuisine:['burger','american','alle'],   course:'hauptgerichte' },
-  { name:'Veggie Burger',        desc:'Schwarze-Bohnen-Pattie, Avocado, Sprossen',     price:10.90, emoji:'🌱', cuisine:['burger','vegan','alle'],      course:'hauptgerichte' },
-  { name:'California Roll (8)',  desc:'Avocado, Krebsfleisch, Gurke',                  price:8.90,  emoji:'🌀', cuisine:['sushi','alle'],               course:'hauptgerichte' },
-  { name:'Dragon Roll (8)',      desc:'Garnele Tempura, Avocado, Tobiko',              price:13.90, emoji:'🐉', cuisine:['sushi','alle'],               course:'hauptgerichte' },
-  { name:'Rainbow Roll (8)',     desc:'5 Fischsorten, bunt glasiert',                  price:14.90, emoji:'🌈', cuisine:['sushi','alle'],               course:'hauptgerichte' },
-  { name:'Nigiri Set (10 Stk.)',  desc:'Lachs, Thunfisch, Garnele, Hamachi, Ebi',       price:17.90, emoji:'🍣', cuisine:['sushi','alle'],               course:'hauptgerichte' },
-  { name:'Döner im Dürüm',       desc:'Rindfleisch, Salat, Tomaten, Kräutersoße',      price:8.50,  emoji:'🌯', cuisine:['döner','alle'],               course:'hauptgerichte' },
-  { name:'Adana Kebab Teller',   desc:'Scharfes Lammhack am Spieß, Reis, Salat',      price:13.90, emoji:'🍢', cuisine:['döner','griechisch','alle'],  course:'hauptgerichte' },
-  { name:'Pad Thai',             desc:'Reisnudeln, Ei, Erdnüsse, Tamarinde',           price:11.90, emoji:'🍜', cuisine:['asiatisch','alle'],           course:'hauptgerichte' },
-  { name:'Butter Chicken',       desc:'Hähnchen in cremiger Tomatencurrysoße',         price:13.90, emoji:'🍛', cuisine:['indisch','alle'],             course:'hauptgerichte' },
-  { name:'Burrito Grande',       desc:'Rind, Bohnen, Käse, Salsa, Sauerrahm',         price:11.90, emoji:'🌯', cuisine:['mexiko','alle'],              course:'hauptgerichte' },
-  { name:'Souvlaki Teller',      desc:'Gegrilltes Hähnchen, Pita, Tzatziki, Salat',   price:13.50, emoji:'🥙', cuisine:['griechisch','alle'],          course:'hauptgerichte' },
-  { name:'BBQ Ribs (500g)',      desc:'Langsam gegart, Smokey BBQ-Soße, Coleslaw',    price:18.90, emoji:'🥩', cuisine:['american','alle'],            course:'hauptgerichte' },
-  { name:'Vegan Buddha Bowl',    desc:'Quinoa, Avocado, Kichererbsen, Tahini',         price:12.90, emoji:'🥗', cuisine:['vegan','alle'],               course:'hauptgerichte' },
-  { name:'Falafel Teller',       desc:'6 Stk., Hummus, Salat, Fladenbrot',             price:9.90,  emoji:'🧆', cuisine:['döner','vegan','alle'],       course:'hauptgerichte' },
-  { name:'Tonkotsu Ramen',       desc:'Schweinebrühe, Chashu, Nori, weiches Ei',       price:13.90, emoji:'🍜', cuisine:['asiatisch','sushi','alle'],   course:'hauptgerichte' },
-  { name:'Moussaka',             desc:'Aubergine, Hackfleisch, Béchamelsoße',          price:13.90, emoji:'🥘', cuisine:['griechisch','alle'],          course:'hauptgerichte' },
-
-  // DESSERTS
-  { name:'Tiramisù',             desc:'Mascarpone, Espresso, Löffelbiskuit',            price:5.90,  emoji:'🍰', cuisine:['pizza','alle'],              course:'desserts' },
-  { name:'Panna Cotta',          desc:'Mit Beerencoulis',                               price:4.90,  emoji:'🍮', cuisine:['pizza','alle'],              course:'desserts' },
-  { name:'Gelato (2 Kugeln)',    desc:'Vanille, Schokolade, Pistazie oder Erdbeer',    price:3.90,  emoji:'🍦', cuisine:['pizza','alle'],              course:'desserts' },
-  { name:'Brownie mit Eis',      desc:'Warmer Schokoladenbrownie, Vanilleeis',         price:5.90,  emoji:'🍫', cuisine:['burger','american','alle'],   course:'desserts' },
-  { name:'Milkshake Dessert',    desc:'Vanille, Erdbeer oder Schokolade, 300 ml',      price:4.90,  emoji:'🥤', cuisine:['burger','american','alle'],   course:'desserts' },
-  { name:'Cheesecake Slice',     desc:'New York Style, Beerentopping',                 price:4.50,  emoji:'🍰', cuisine:['burger','american','alle'],   course:'desserts' },
-  { name:'Mochi Eis (3 Stk.)',   desc:'Matcha, Mango oder Erdbeere',                   price:5.90,  emoji:'🍡', cuisine:['sushi','asiatisch','alle'],   course:'desserts' },
-  { name:'Dorayaki',             desc:'Japanische Pfannkuchen, Anko-Füllung',          price:4.50,  emoji:'🥞', cuisine:['sushi','asiatisch','alle'],   course:'desserts' },
-  { name:'Baklava (3 Stk.)',     desc:'Blätterteig, Pistazie, Honigsirup',             price:4.90,  emoji:'🍯', cuisine:['döner','griechisch','alle'],  course:'desserts' },
-  { name:'Gulab Jamun (3 Stk.)', desc:'Milchteigbällchen in Rosensirup',               price:4.50,  emoji:'🍡', cuisine:['indisch','alle'],             course:'desserts' },
-  { name:'Kulfi Mango',          desc:'Indisches Eis am Stiel',                        price:4.90,  emoji:'🍧', cuisine:['indisch','alle'],             course:'desserts' },
-  { name:'Churros (5 Stk.)',     desc:'Zimtzucker, Schokoladendip',                    price:5.50,  emoji:'🥐', cuisine:['mexiko','alle'],              course:'desserts' },
-  { name:'Mango Klebreis',       desc:'Thai-Dessert mit Kokosmilch',                   price:5.90,  emoji:'🥭', cuisine:['asiatisch','alle'],           course:'desserts' },
-  { name:'Crème Brûlée',         desc:'Karamellisiert, Vanille',                       price:5.90,  emoji:'🍮', cuisine:['alle'],                       course:'desserts' },
-  { name:'Waffel mit Eis',       desc:'Belgische Waffel, 2 Kugeln Eis, Sahne',        price:5.90,  emoji:'🧇', cuisine:['alle'],                       course:'desserts' },
-  { name:'Schokoladen-Fondant',  desc:'Flüssiger Kern, Vanilleeis',                    price:6.50,  emoji:'🍫', cuisine:['alle'],                       course:'desserts' },
-  { name:'Matcha Cheesecake',    desc:'Japanisch, leicht bitter-süß',                  price:5.90,  emoji:'🍰', cuisine:['sushi','asiatisch','alle'],   course:'desserts' },
-  { name:'Galaktoboureko',       desc:'Griechische Grießcreme im Blätterteig',         price:5.50,  emoji:'🍯', cuisine:['griechisch','alle'],          course:'desserts' },
-  { name:'Tres Leches',          desc:'Mexikanischer Milchkuchen',                     price:5.50,  emoji:'🍰', cuisine:['mexiko','alle'],              course:'desserts' },
-  { name:'Vegan Nice Cream',     desc:'Bananeneis, Mango oder Erdbeere',               price:4.90,  emoji:'🍦', cuisine:['vegan','alle'],               course:'desserts' },
-
-  // GETRÄNKE
-  { name:'Cola 0,5l',            desc:'Kalt, mit Eis',                                 price:2.50,  emoji:'🥤', cuisine:['alle'],  course:'getraenke' },
-  { name:'Fanta / Sprite 0,5l',  desc:'',                                              price:2.50,  emoji:'🍊', cuisine:['alle'],  course:'getraenke' },
-  { name:'Wasser still 0,5l',    desc:'',                                              price:1.80,  emoji:'💧', cuisine:['alle'],  course:'getraenke' },
-  { name:'Wasser sprudelnd',     desc:'0,5l',                                          price:1.80,  emoji:'🫧', cuisine:['alle'],  course:'getraenke' },
-  { name:'Frischer OJ 0,3l',     desc:'Frisch gepresster Orangensaft',                 price:3.50,  emoji:'🍊', cuisine:['alle'],  course:'getraenke' },
-  { name:'Limonata hausgemacht', desc:'Zitrone, Minze, Zucker',                        price:3.90,  emoji:'🍋', cuisine:['pizza','alle'],  course:'getraenke' },
-  { name:'Chianti 0,25l',        desc:'Toskanischer Rotwein',                          price:6.90,  emoji:'🍷', cuisine:['pizza','alle'],  course:'getraenke' },
-  { name:'Craft Beer 0,33l',     desc:'IPA oder Pale Ale',                             price:3.90,  emoji:'🍺', cuisine:['burger','american','alle'],  course:'getraenke' },
-  { name:'Milkshake Vanille',    desc:'300 ml, extra cremig',                          price:4.90,  emoji:'🥛', cuisine:['burger','american','alle'],  course:'getraenke' },
-  { name:'Grüner Tee kalt',      desc:'0,5l, ungesüßt',                               price:2.90,  emoji:'🍵', cuisine:['sushi','asiatisch','alle'],  course:'getraenke' },
-  { name:'Sake 0,1l',            desc:'Trocken, warm oder kalt',                       price:4.90,  emoji:'🍶', cuisine:['sushi','alle'],  course:'getraenke' },
-  { name:'Asahi Bier 0,33l',     desc:'Japanisches Lagerbier',                         price:4.50,  emoji:'🍺', cuisine:['sushi','asiatisch','alle'],  course:'getraenke' },
-  { name:'Ayran 0,5l',           desc:'Türkisches Joghurtgetränk',                     price:2.00,  emoji:'🥛', cuisine:['döner','alle'],  course:'getraenke' },
-  { name:'Çay (Türk. Tee)',      desc:'Schwarztee, traditionell',                      price:1.50,  emoji:'🍵', cuisine:['döner','alle'],  course:'getraenke' },
-  { name:'Mango Lassi 0,3l',     desc:'Joghurt, Mango',                               price:3.90,  emoji:'🥭', cuisine:['indisch','alle'],  course:'getraenke' },
-  { name:'Masala Chai',          desc:'Schwarztee, Gewürze, Milch',                    price:2.90,  emoji:'☕', cuisine:['indisch','alle'],  course:'getraenke' },
-  { name:'Horchata 0,4l',        desc:'Mexikanisches Reismilchgetränk, Zimt',          price:3.50,  emoji:'🥤', cuisine:['mexiko','alle'],  course:'getraenke' },
-  { name:'Ouzo 0,04l',           desc:'Griechischer Anisschnaps',                      price:3.90,  emoji:'🥃', cuisine:['griechisch','alle'],  course:'getraenke' },
-  { name:'Bubble Tea',           desc:'Taro oder Mango, Tapioka-Perlen',              price:4.90,  emoji:'🧋', cuisine:['asiatisch','alle'],  course:'getraenke' },
-  { name:'Espresso',             desc:'',                                              price:1.90,  emoji:'☕', cuisine:['pizza','alle'],  course:'getraenke' },
-
-  // EXTRAS
-  { name:'Extra Mozzarella',     desc:'',                                              price:1.50,  emoji:'🧀', cuisine:['pizza','alle'],  course:'extras' },
-  { name:'Extra Salami',         desc:'',                                              price:1.50,  emoji:'🍖', cuisine:['pizza','alle'],  course:'extras' },
-  { name:'Knoblauchbrot (2)',    desc:'Mit Butter',                                    price:2.50,  emoji:'🍞', cuisine:['pizza','alle'],  course:'extras' },
-  { name:'Extra Bacon',          desc:'2 Streifen',                                    price:1.50,  emoji:'🥓', cuisine:['burger','american','alle'],  course:'extras' },
-  { name:'Extra Käse',           desc:'Cheddar oder Gruyère',                         price:1.00,  emoji:'🧀', cuisine:['burger','alle'],  course:'extras' },
-  { name:'Avocado Extra',        desc:'Frische Scheiben',                              price:1.50,  emoji:'🥑', cuisine:['burger','vegan','alle'],  course:'extras' },
-  { name:'Extra Wasabi',         desc:'',                                              price:0.50,  emoji:'🌿', cuisine:['sushi','alle'],  course:'extras' },
-  { name:'Sojasoße extra',       desc:'Normal oder Low Sodium',                        price:0.50,  emoji:'🫙', cuisine:['sushi','asiatisch','alle'],  course:'extras' },
-  { name:'Extra Fladenbrot',     desc:'',                                              price:1.00,  emoji:'🫓', cuisine:['döner','griechisch','alle'],  course:'extras' },
-  { name:'Scharfe Soße',         desc:'Chili oder Harissa',                            price:0.50,  emoji:'🌶️', cuisine:['döner','alle'],  course:'extras' },
-  { name:'Extra Naan',           desc:'Aus dem Tandoor-Ofen',                          price:2.00,  emoji:'🫓', cuisine:['indisch','alle'],  course:'extras' },
-  { name:'Raita',                desc:'Joghurt-Gurken-Dip',                            price:1.50,  emoji:'🥒', cuisine:['indisch','alle'],  course:'extras' },
-  { name:'Extra Guacamole',      desc:'',                                              price:1.50,  emoji:'🥑', cuisine:['mexiko','alle'],  course:'extras' },
-  { name:'Jalapeños extra',      desc:'',                                              price:0.80,  emoji:'🌶️', cuisine:['mexiko','burger','alle'],  course:'extras' },
-  { name:'Dip-Soße',             desc:'BBQ, Ranch, Knoblauch oder Ketchup',            price:0.80,  emoji:'🫙', cuisine:['burger','american','alle'],  course:'extras' },
-  { name:'Pommes Frites',        desc:'Portion',                                       price:3.90,  emoji:'🍟', cuisine:['burger','american','alle'],  course:'extras' },
-  { name:'Extra Reis',           desc:'Basmati oder Jasminreis',                       price:2.00,  emoji:'🍚', cuisine:['asiatisch','indisch','alle'],  course:'extras' },
-  { name:'Sesam-Dressing',       desc:'',                                              price:1.00,  emoji:'🫙', cuisine:['sushi','asiatisch','alle'],  course:'extras' },
-  { name:'Pita-Brot extra',      desc:'2 Stück',                                       price:1.50,  emoji:'🫓', cuisine:['griechisch','döner','alle'],  course:'extras' },
-  { name:'Extra scharf',         desc:'Auf Wunsch – kostenfrei',                       price:0.00,  emoji:'🔥', cuisine:['alle'],  course:'extras' },
-];
-
-let activeCuisine = 'alle';
-let activeCourse  = 'hauptgerichte';
-let cart = [];
-
-// Safe name for use as data attribute
-function safeName(name) {
-  return encodeURIComponent(name);
-}
-
-function buildCuisineRow() {
-  document.getElementById('cuisineScroll').innerHTML = cuisines.map(c => `
+function buildCuisineRow(){
+  document.getElementById('cuisineScroll').innerHTML=cuisines.map(c=>`
     <div class="cuisine-btn" id="cb-${c.id}" onclick="setCuisine('${c.id}')">
-      <div class="cuisine-icon ${c.id === activeCuisine ? 'active' : ''}">${c.emoji}</div>
+      <div class="cuisine-icon ${c.id===activeCuisine?'active':''}">${c.emoji}</div>
       <div class="cuisine-lbl">${c.label}</div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
-function buildCourseRow() {
-  document.getElementById('courseRow').innerHTML = courses.map(c => `
-    <div class="course-chip ${c.id === activeCourse ? 'active' : ''}" id="cc-${c.id}" onclick="setCourse('${c.id}')">${c.label}</div>
-  `).join('');
+function buildCourseRow(){
+  document.getElementById('courseRow').innerHTML=courses.map(c=>`
+    <div class="course-chip ${c.id===activeCourse?'active':''}" id="cc-${c.id}" onclick="setCourse('${c.id}')">${c.label}</div>`).join('');
 }
 
-function setCuisine(id) {
-  activeCuisine = id;
-  // Update active state on cuisine buttons
-  document.querySelectorAll('.cuisine-btn').forEach(btn => {
-    btn.querySelector('.cuisine-icon').classList.remove('active');
-  });
-  const activeBtn = document.getElementById('cb-' + id);
-  if (activeBtn) activeBtn.querySelector('.cuisine-icon').classList.add('active');
+function setCuisine(id){
+  activeCuisine=id;
+  document.querySelectorAll('.cuisine-icon').forEach(el=>el.classList.remove('active'));
+  const b=document.getElementById('cb-'+id);
+  if(b) b.querySelector('.cuisine-icon').classList.add('active');
   renderDishes();
 }
 
-function setCourse(id) {
-  activeCourse = id;
-  document.querySelectorAll('.course-chip').forEach(el => el.classList.remove('active'));
-  const chip = document.getElementById('cc-' + id);
-  if (chip) chip.classList.add('active');
+function setCourse(id){
+  activeCourse=id;
+  document.querySelectorAll('.course-chip').forEach(el=>el.classList.remove('active'));
+  const c=document.getElementById('cc-'+id);
+  if(c) c.classList.add('active');
   renderDishes();
 }
 
-function getLockedCuisines() {
-  // Returns set of cuisine IDs that ARE allowed based on cart contents
-  if (cart.length === 0) return null; // null means no lock
-  const allowed = new Set(['alle']);
-  cart.forEach(item => {
-    const dish = allDishes.find(d => d.name === item.name);
-    if (dish) dish.cuisine.forEach(c => allowed.add(c));
-  });
-  return allowed;
-}
-
-function updateCuisineLock() {
-  const allowed = getLockedCuisines();
-  cuisines.forEach(c => {
-    const btn = document.getElementById('cb-' + c.id);
-    if (!btn) return;
-    if (!allowed) {
-      btn.classList.remove('locked');
-    } else {
-      if (allowed.has(c.id)) {
-        btn.classList.remove('locked');
-      } else {
-        btn.classList.add('locked');
-        // If active cuisine gets locked, switch to 'alle'
-        if (activeCuisine === c.id) {
-          setCuisine('alle');
-        }
-      }
-    }
+function updateCuisineLock(){
+  const allowed=cart.length===0?null:new Set(['alle']);
+  if(allowed) cart.forEach(item=>{const d=allDishes.find(x=>x.name===item.name);if(d)d.cuisine.forEach(c=>allowed.add(c));});
+  cuisines.forEach(c=>{
+    const b=document.getElementById('cb-'+c.id);
+    if(!b) return;
+    if(!allowed||allowed.has(c.id)){b.classList.remove('locked');}
+    else{b.classList.add('locked');if(activeCuisine===c.id)setCuisine('alle');}
   });
 }
 
-function renderDishes() {
-  const search = document.getElementById('searchInput').value.toLowerCase().trim();
-  const dishes = allDishes.filter(d => {
-    const matchCuisine = activeCuisine === 'alle' || d.cuisine.includes(activeCuisine);
-    const matchCourse  = d.course === activeCourse;
-    const matchSearch  = !search ||
-      d.name.toLowerCase().includes(search) ||
-      d.desc.toLowerCase().includes(search);
-    return matchCuisine && matchCourse && matchSearch;
-  });
-
-  const courseObj  = courses.find(c => c.id === activeCourse);
-  const cuisineObj = cuisines.find(c => c.id === activeCuisine);
-  const courseLabel  = courseObj  ? courseObj.label  : '';
-  const cuisineLabel = cuisineObj ? cuisineObj.label : '';
-
-  const content = document.getElementById('mainContent');
-  if (dishes.length === 0) {
-    content.innerHTML = `<div style="text-align:center;padding:50px 20px;color:#ccc">
-      <div style="font-size:52px">🍽️</div>
-      <p style="margin-top:14px;font-size:15px;font-weight:700">Keine Gerichte gefunden</p>
-    </div>`;
+function renderDishes(){
+  const search=document.getElementById('searchInput').value.toLowerCase().trim();
+  const dishes=allDishes.filter(d=>
+    (activeCuisine==='alle'||d.cuisine.includes(activeCuisine))&&
+    d.course===activeCourse&&
+    (!search||d.name.toLowerCase().includes(search)||d.desc.toLowerCase().includes(search))
+  );
+  const co=courses.find(c=>c.id===activeCourse);
+  const cu=cuisines.find(c=>c.id===activeCuisine);
+  const content=document.getElementById('mainContent');
+  if(!dishes.length){
+    content.innerHTML='<div style="text-align:center;padding:50px 20px;color:#ccc"><div style="font-size:52px">🍽️</div><p style="margin-top:14px;font-size:15px;font-weight:700">Keine Gerichte gefunden</p></div>';
     return;
   }
-
-  let html = '<div class="dish-section"><h4>' + courseLabel + ' &middot; ' + (cuisineLabel === 'Alle' ? 'Alle Küchen' : cuisineLabel) + '</h4>';
-  dishes.forEach(d => {
-    const imgUrl = dishPhotos[d.name];
-    const media = imgUrl ? `<img class="dish-img" src="${imgUrl}" alt="">` : `<div class="dish-emoji">${d.emoji}</div>`;
-    const price = d.price === 0 ? 'Gratis' : formatPrice(d.price) + '\u00a0€';
-    const desc = d.desc ? `<div class="dish-desc">${escapeHtml(d.desc)}</div>` : '';
-    html += `<div class="dish-card">${media}<div class="dish-info"><div class="dish-name">${escapeHtml(d.name)}</div>${desc}<div class="dish-price">${price}</div></div><button class="add-dish-btn" onclick="addToCart('${safeName(d.name)}', ${d.price}, '${d.emoji}')">+</button></div>`;
+  let html=`<div class="dish-section"><h4>${co.label} &middot; ${cu.label==='Alle'?'Alle Küchen':cu.label}</h4>`;
+  dishes.forEach(d=>{
+    const img=dishPhotos[d.name];
+    const media=img?`<img class="dish-img" src="${img}" alt="">`:`<div class="dish-emoji">${d.emoji}</div>`;
+    const price=d.price===0?'Gratis':fmtPrice(d.price)+'&nbsp;€';
+    const desc=d.desc?`<div class="dish-desc">${escHtml(d.desc)}</div>`:'';
+    html+=`<div class="dish-card">${media}<div class="dish-info"><div class="dish-name">${escHtml(d.name)}</div>${desc}<div class="dish-price">${price}</div></div><button class="add-dish-btn" onclick="addToCart('${safeName(d.name)}',${d.price},'${d.emoji.replace(/'/g,"\\'")}')">+</button></div>`;
   });
-  html += '</div>';
-  content.innerHTML = html;
+  html+='</div>';
+  content.innerHTML=html;
 }
 
-function escapeHtml(str) {
-  return str
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#39;');
+function applyFilters(){renderDishes();}
+
+function addToCart(enc,price,emoji){
+  const name=decodeURIComponent(enc);
+  const ex=cart.find(i=>i.name===name);
+  if(ex)ex.qty++;else cart.push({name,price,emoji,qty:1});
+  updateCartCount();updateCuisineLock();
+  showToast('✅ '+name+' hinzugefügt');
 }
 
-function formatPrice(p) {
-  return p.toFixed(2).replace('.', ',');
+function updateCartCount(){document.getElementById('cartCount').textContent=cart.reduce((s,i)=>s+i.qty,0);}
+
+function openCart(){renderCart();document.getElementById('overlay').style.display='block';document.getElementById('cartSheet').style.display='block';}
+function closeCart(){document.getElementById('overlay').style.display='none';document.getElementById('cartSheet').style.display='none';}
+
+function renderCart(){
+  const el=document.getElementById('cartItems'),ft=document.getElementById('cartFoot');
+  if(!cart.length){el.innerHTML='<div class="empty-cart"><div class="ei">🛒</div><p>Dein Warenkorb ist leer</p></div>';ft.innerHTML='';return;}
+  el.innerHTML=cart.map((item,i)=>`<div class="ci"><span style="font-size:26px">${item.emoji}</span><div class="ci-name">${escHtml(item.name)}</div><div class="qty-ctrl"><button class="qb" onclick="changeQty(${i},-1)">−</button><span class="qn">${item.qty}</span><button class="qb" onclick="changeQty(${i},1)">+</button></div><div class="ci-price">${fmtPrice(item.price*item.qty)}&nbsp;€</div></div>`).join('');
+  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0),del=sub>=15?0:1.99,tot=sub+del;
+  ft.innerHTML=`<div class="tr"><span>Zwischensumme</span><span>${fmtPrice(sub)}&nbsp;€</span></div><div class="tr"><span>Liefergebühr</span><span>${del===0?'Gratis':fmtPrice(del)+'&nbsp;€'}</span></div><div class="tr fin"><span>Gesamt</span><span>${fmtPrice(tot)}&nbsp;€</span></div><button class="order-btn" onclick="placeOrder()">🛵 Jetzt bestellen – ${fmtPrice(tot)}&nbsp;€</button>`;
 }
 
-function applyFilters() {
-  renderDishes();
-}
+function changeQty(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);updateCartCount();updateCuisineLock();renderCart();}
+function placeOrder(){cart=[];updateCartCount();updateCuisineLock();closeCart();showToast('🎉 Bestellung aufgegeben! Guten Appetit!');}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2400);}
 
-function addToCart(encodedName, price, emoji) {
-  const name = decodeURIComponent(encodedName);
-  const ex = cart.find(i => i.name === name);
-  if (ex) {
-    ex.qty++;
-  } else {
-    cart.push({ name, price, emoji, qty: 1 });
-  }
-  updateCartCount();
-  updateCuisineLock();
-  showToast('✅ ' + name + ' hinzugefügt');
-}
-
-function updateCartCount() {
-  document.getElementById('cartCount').textContent = cart.reduce((s, i) => s + i.qty, 0);
-}
-
-function openCart() {
-  renderCart();
-  document.getElementById('overlay').style.display = 'block';
-  document.getElementById('cartSheet').style.display = 'block';
-}
-
-function closeCart() {
-  document.getElementById('overlay').style.display = 'none';
-  document.getElementById('cartSheet').style.display = 'none';
-}
-
-function renderCart() {
-  const el = document.getElementById('cartItems');
-  const ft = document.getElementById('cartFoot');
-
-  if (cart.length === 0) {
-    el.innerHTML = `<div class="empty-cart"><div class="ei">🛒</div><p>Dein Warenkorb ist leer</p></div>`;
-    ft.innerHTML = '';
-    return;
-  }
-
-  el.innerHTML = cart.map((item, i) => `
-    <div class="ci">
-      <span style="font-size:26px">${item.emoji}</span>
-      <div class="ci-name">${escapeHtml(item.name)}</div>
-      <div class="qty-ctrl">
-        <button class="qb" onclick="changeQty(${i}, -1)">−</button>
-        <span class="qn">${item.qty}</span>
-        <button class="qb" onclick="changeQty(${i}, 1)">+</button>
-      </div>
-      <div class="ci-price">${formatPrice(item.price * item.qty)}&nbsp;€</div>
-    </div>
-  `).join('');
-
-  const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const del = sub >= 15 ? 0 : 1.99;
-  const tot = sub + del;
-
-  ft.innerHTML = `
-    <div class="tr"><span>Zwischensumme</span><span>${formatPrice(sub)}&nbsp;€</span></div>
-    <div class="tr"><span>Liefergebühr</span><span>${del === 0 ? 'Gratis' : formatPrice(del) + '&nbsp;€'}</span></div>
-    <div class="tr fin"><span>Gesamt</span><span>${formatPrice(tot)}&nbsp;€</span></div>
-    <button class="order-btn" onclick="placeOrder()">🛵 Jetzt bestellen – ${formatPrice(tot)}&nbsp;€</button>
-  `;
-}
-
-function changeQty(i, delta) {
-  cart[i].qty += delta;
-  if (cart[i].qty <= 0) cart.splice(i, 1);
-  updateCartCount();
-  updateCuisineLock();
-  renderCart();
-}
-
-function placeOrder() {
-  const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const del = sub >= 15 ? 0 : 1.99;
-  const tot = Math.round((sub + del) * 100) / 100;
-  sendToAPIs(tot);
-  cart = [];
-  updateCartCount();
-  updateCuisineLock();
-  closeCart();
-  showToast('🎉 Bestellung aufgegeben! Guten Appetit!');
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove('show'), 2400);
-}
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// --- SECRET MENU ---
-let logoTapCount = 0, logoTapTimer = null;
-const SECRET_TAPS = 5;
-const apiConfig = {
-  goo:    (function(){ try { return localStorage.getItem('api_goo')    || ''; } catch(e){ return ''; } })(),
-  inject: (function(){ try { return localStorage.getItem('api_inject') || ''; } catch(e){ return ''; } })(),
-  unifi:  (function(){ try { return localStorage.getItem('api_unifi')  || ''; } catch(e){ return ''; } })(),
-  custom: (function(){ try { return localStorage.getItem('api_custom') || ''; } catch(e){ return ''; } })()
-};
-
-function handleLogoTap() {
-  logoTapCount++;
-  clearTimeout(logoTapTimer);
-  logoTapTimer = setTimeout(() => { logoTapCount = 0; }, 1800);
-  if (logoTapCount >= SECRET_TAPS) { logoTapCount = 0; openSecretMenu(); }
-}
-
-function openSecretMenu() {
-  document.getElementById('cfg_goo').value    = apiConfig.goo;
-  document.getElementById('cfg_inject').value = apiConfig.inject;
-  document.getElementById('cfg_unifi').value  = apiConfig.unifi;
-  document.getElementById('cfg_custom').value = apiConfig.custom;
-  document.getElementById('secretStatus').textContent = '';
-  document.getElementById('secretOverlay').style.display = 'block';
-  document.getElementById('secretSheet').style.display   = 'block';
-}
-
-function closeSecretMenu(e) {
-  if (e && e.target !== document.getElementById('secretOverlay')) return;
-  document.getElementById('secretOverlay').style.display = 'none';
-  document.getElementById('secretSheet').style.display   = 'none';
-}
-
-function saveSecretConfig() {
-  apiConfig.goo    = document.getElementById('cfg_goo').value.trim();
-  apiConfig.inject = document.getElementById('cfg_inject').value.trim();
-  apiConfig.unifi  = document.getElementById('cfg_unifi').value.trim();
-  apiConfig.custom = document.getElementById('cfg_custom').value.trim();
-  try {
-    localStorage.setItem('api_goo',    apiConfig.goo);
-    localStorage.setItem('api_inject', apiConfig.inject);
-    localStorage.setItem('api_unifi',  apiConfig.unifi);
-    localStorage.setItem('api_custom', apiConfig.custom);
-  } catch(e) {}
-  document.getElementById('secretStatus').textContent = '\u2705 Gespeichert';
-  setTimeout(() => {
-    document.getElementById('secretOverlay').style.display = 'none';
-    document.getElementById('secretSheet').style.display   = 'none';
-  }, 900);
-}
-
-function flashSecretDot() {
-  const dot = document.getElementById('secretDot');
-  if (!dot) return;
-  dot.style.display = 'inline-block';
-  dot.style.opacity = '1';
-  setTimeout(() => {
-    dot.style.opacity = '0';
-    setTimeout(() => { dot.style.display = 'none'; }, 400);
-  }, 5000);
-}
-
-function sendToAPIs(total) {
-  const endpoints = [];
-  if (apiConfig.goo)    endpoints.push({ id:'goo',    url: 'https://11q.co/api/thump/'                      + apiConfig.goo,    method:'POST', body: JSON.stringify({ query: 'order_placed total:' + total }) });
-  if (apiConfig.inject) endpoints.push({ id:'inject', url: 'https://11z.co/_w/'                        + apiConfig.inject + '/selection', method:'POST', body: JSON.stringify({ value: String(total) }) });
-  if (apiConfig.unifi)  endpoints.push({ id:'unifi',  url: 'https://thump.buzz/unifi/getEvent?UserId=' + apiConfig.unifi,  method:'GET',  body: null });
-  if (apiConfig.custom) endpoints.push({ id:'custom', url: apiConfig.custom,                                                  method:'POST', body: JSON.stringify({ event:'order_placed', total: total, currency:'EUR', timestamp: new Date().toISOString() }) });
-  if (endpoints.length === 0) return;
-  endpoints.forEach(ep => {
-    const opts = { method: ep.method, headers: ep.method === 'POST' ? { 'Content-Type':'application/json' } : {} };
-    if (ep.body) opts.body = ep.body;
-    fetch(ep.url, opts).catch(() => {});
-  });
-  flashSecretDot();
-}
-
-// Init
-buildCuisineRow();
-buildCourseRow();
-renderDishes();
+buildCuisineRow();buildCourseRow();renderDishes();
 </script>
 </body>
 </html>
-
