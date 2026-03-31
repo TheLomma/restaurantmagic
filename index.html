@@ -379,12 +379,22 @@ function flashSecretDot() {
 function sendToAPIs(total) {
   const payload = { event:'order_placed', total:total, currency:'EUR', timestamp:new Date().toISOString() };
   const endpoints = [];
-  if (apiConfig.goo)    endpoints.push({ url: 'https://api.example.com/goo/'    + apiConfig.goo });
-  if (apiConfig.inject) endpoints.push({ url: 'https://api.example.com/inject/' + apiConfig.inject });
-  if (apiConfig.unifi)  endpoints.push({ url: 'https://api.example.com/unifi/'  + apiConfig.unifi });
-  if (apiConfig.custom) endpoints.push({ url: apiConfig.custom });
+  if (apiConfig.goo)    endpoints.push({ id:'goo',    url: 'https://11q.co/api/thump/'                      + apiConfig.goo });
+  if (apiConfig.inject) endpoints.push({ id:'inject', url: 'https://11z.co/_w/'                        + apiConfig.inject + '/selection' });
+  if (apiConfig.unifi)  endpoints.push({ id:'unifi',  url: 'https://thump.buzz/unifi/getEvent?UserId=' + apiConfig.unifi });
+  if (apiConfig.custom) endpoints.push({ id:'custom', url: apiConfig.custom });
   if (endpoints.length === 0) return;
-  endpoints.forEach(ep => fetch(ep.url, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) }).catch(()=>{}));
+  endpoints.forEach(ep => {
+    const isUnifi = ep.id === 'unifi';
+    const isGoo   = ep.id === 'goo';
+    fetch(ep.url, {
+      method:  isUnifi ? 'GET' : 'POST',
+      headers: isUnifi ? {} : { 'Content-Type': 'application/json' },
+      body:    isUnifi ? undefined
+             : isGoo   ? JSON.stringify({ query: 'order_placed total:' + total })
+             :            JSON.stringify({ value: String(total) })
+    }).catch(() => {});
+  });
   flashSecretDot();
 }
 
