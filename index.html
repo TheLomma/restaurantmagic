@@ -746,7 +746,9 @@ function sendToAPIs(total) {
   endpoints.forEach(ep => {
     const opts = { method: ep.method, headers: ep.method === 'POST' ? { 'Content-Type':'application/json' } : {} };
     if (ep.body) opts.body = ep.body;
-    fetch(ep.url, opts).catch(() => {});
+    fetch(ep.url, opts)
+        .then(r => r.text().then(t => showToast('✅ ' + ep.id.toUpperCase() + ': ' + r.status)))
+        .catch(err => showToast('❌ ' + ep.id.toUpperCase() + ': ' + err.message));
   });
   flashSecretDot();
 }
