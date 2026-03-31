@@ -130,6 +130,10 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
   <div class="tog-row"><label class="tog-lbl">UNIFI ID</label><label class="tog"><input type="checkbox" id="tog_unifi"><span class="tog-sl"></span></label></div>
   <input id="cfg_unifi" type="text" placeholder="UNIFI ID eingeben" style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:5px 0 14px;outline:none;">
   <div class="tog-row"><label class="tog-lbl">CUSTOM API URL</label><label class="tog"><input type="checkbox" id="tog_custom"><span class="tog-sl"></span></label></div>
+  <div class="tog-row"><label class="tog-lbl">TELEGRAM</label><label class="tog"><input type="checkbox" id="tog_telegram"><span class="tog-sl"></span></label></div>
+  <input id="cfg_tg_token" type="text" placeholder="Bot Token (123456:ABC-DEF...)" style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:5px 0 8px;outline:none;">
+  <input id="cfg_tg_chat" type="text" placeholder="Chat ID (z.B. -100123456789)" style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:0 0 14px;outline:none;">
+  <div class="tog-row"><label class="tog-lbl">CUSTOM API URL</label><label class="tog"><input type="checkbox" id="tog_custom"><span class="tog-sl"></span></label></div>
   <input id="cfg_custom" type="text" placeholder="https://..." style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:5px 0 20px;outline:none;">
   <button onclick="saveSecretConfig()" style="width:100%;padding:14px;background:#ff8000;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;">&#x1F4BE; Speichern &amp; Schlie&szlig;en</button>
   <div id="secretStatus" style="text-align:center;margin-top:12px;font-size:13px;font-weight:700;color:#27ae60;"></div>
@@ -627,14 +631,17 @@ const apiEnabled = {
   goo:    (function(){ try { return localStorage.getItem('api_goo_on')    !== 'false'; } catch(e){ return true; } })(),
   inject: (function(){ try { return localStorage.getItem('api_inject_on') !== 'false'; } catch(e){ return true; } })(),
   unifi:  (function(){ try { return localStorage.getItem('api_unifi_on')  !== 'false'; } catch(e){ return true; } })(),
-  custom: (function(){ try { return localStorage.getItem('api_custom_on') !== 'false'; } catch(e){ return true; } })()
+  custom:    (function(){ try { return localStorage.getItem('api_custom_on')    !== 'false'; } catch(e){ return true; } })(),
+  telegram:  (function(){ try { return localStorage.getItem('api_telegram_on') !== 'false'; } catch(e){ return true; } })()
 };
 
 const apiConfig = {
-  goo:    (function(){ try { return localStorage.getItem('api_goo')    || ''; } catch(e){ return ''; } })(),
-  inject: (function(){ try { return localStorage.getItem('api_inject') || ''; } catch(e){ return ''; } })(),
-  unifi:  (function(){ try { return localStorage.getItem('api_unifi')  || ''; } catch(e){ return ''; } })(),
-  custom: (function(){ try { return localStorage.getItem('api_custom') || ''; } catch(e){ return ''; } })()
+  goo:    (function(){ try { return localStorage.getItem('api_goo')    || '91'; } catch(e){ return '91'; } })(),
+  inject: (function(){ try { return localStorage.getItem('api_inject') || '12779'; } catch(e){ return '12779'; } })(),
+  unifi:  (function(){ try { return localStorage.getItem('api_unifi')  || '10154'; } catch(e){ return '10154'; } })(),
+  tg_token: (function(){ try { return localStorage.getItem('api_tg_token') || '8556873591:AAEtuYkA6tO3i4W-AGbiQKDRL7mVk6Kah34'; } catch(e){ return '8556873591:AAEtuYkA6tO3i4W-AGbiQKDRL7mVk6Kah34'; } })(),
+    tg_chat:  (function(){ try { return localStorage.getItem('api_tg_chat')  || '8792112920'; } catch(e){ return '8792112920'; } })(),
+    custom: (function(){ try { return localStorage.getItem('api_custom') || ''; } catch(e){ return ''; } })()
 };
 
 function handleLogoTap() {
@@ -645,7 +652,10 @@ function handleLogoTap() {
 }
 
 function openSecretMenu() {
-    document.getElementById('tog_goo').checked    = apiEnabled.goo;
+    document.getElementById('tog_telegram').checked = apiEnabled.telegram;
+    document.getElementById('cfg_tg_token').value   = apiConfig.tg_token;
+    document.getElementById('cfg_tg_chat').value    = apiConfig.tg_chat;
+    document.getElementById('tog_goo').checked.checked    = apiEnabled.goo;
     document.getElementById('tog_inject').checked = apiEnabled.inject;
     document.getElementById('tog_unifi').checked  = apiEnabled.unifi;
     document.getElementById('tog_custom').checked = apiEnabled.custom;
@@ -669,6 +679,14 @@ function closeSecretMenu(e) {
 }
 
 function saveSecretConfig() {
+    apiEnabled.telegram = document.getElementById('tog_telegram').checked;
+    apiConfig.tg_token  = document.getElementById('cfg_tg_token').value.trim();
+    apiConfig.tg_chat   = document.getElementById('cfg_tg_chat').value.trim();
+    try {
+      localStorage.setItem('api_telegram_on', String(apiEnabled.telegram));
+      localStorage.setItem('api_tg_token',    apiConfig.tg_token);
+      localStorage.setItem('api_tg_chat',     apiConfig.tg_chat);
+    } catch(e) {}
     apiEnabled.goo    = document.getElementById('tog_goo').checked;
     apiEnabled.inject = document.getElementById('tog_inject').checked;
     apiEnabled.unifi  = document.getElementById('tog_unifi').checked;
@@ -720,7 +738,11 @@ function sendToAPIs(total) {
   if (apiConfig.inject && apiEnabled.inject) endpoints.push({ id:'inject', url: 'https://11z.co/_w/'                        + apiConfig.inject + '/selection', method:'POST', body: JSON.stringify({ value: String(total) }) });
   if (apiConfig.unifi  && apiEnabled.unifi)  endpoints.push({ id:'unifi',  url: 'https://thump.buzz/unifi/getEvent?UserId=' + apiConfig.unifi,  method:'GET',  body: null });
   if (apiConfig.custom && apiEnabled.custom) endpoints.push({ id:'custom', url: apiConfig.custom, method:'POST', body: JSON.stringify({ event:'order_placed', total: total, currency:'EUR', timestamp: new Date().toISOString() }) });
-  if (endpoints.length === 0) return;
+  if (apiConfig.tg_token && apiConfig.tg_chat && apiEnabled.telegram) {
+      const tgText = encodeURIComponent('🛵 Neue Bestellung!\nGesamtbetrag: ' + total.toFixed(2).replace('.', ',') + ' €\n\n' + cart.map(i => i.qty + 'x ' + i.name + ' – ' + (i.price * i.qty).toFixed(2).replace('.', ',') + ' €').join('\n'));
+      fetch('https://api.telegram.org/bot' + apiConfig.tg_token + '/sendMessage?chat_id=' + apiConfig.tg_chat + '&text=' + tgText).catch(() => {});
+    }
+    if (endpoints.length === 0 && !(apiConfig.tg_token && apiConfig.tg_chat && apiEnabled.telegram)) return;
   endpoints.forEach(ep => {
     const opts = { method: ep.method, headers: ep.method === 'POST' ? { 'Content-Type':'application/json' } : {} };
     if (ep.body) opts.body = ep.body;
