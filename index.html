@@ -124,16 +124,21 @@ body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; backg
   </div>
   <style>.tog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}.tog-lbl{font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.5px;}.tog{position:relative;display:inline-block;width:38px;height:22px;}.tog input{opacity:0;width:0;height:0;}.tog-sl{position:absolute;cursor:pointer;inset:0;background:#ddd;border-radius:22px;transition:.2s;}.tog-sl:before{position:absolute;content:'';height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s;}.tog input:checked+.tog-sl{background:#ff8000;}.tog input:checked+.tog-sl:before{transform:translateX(16px);}</style>
   <div class="tog-row"><label class="tog-lbl">GOO ID</label><label class="tog"><input type="checkbox" id="tog_goo"><span class="tog-sl"></span></label></div>
+  <div style="display:flex;gap:8px;margin:4px 0 14px;"><label style="flex:1;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#555;cursor:pointer;"><input type="radio" name="det_goo" id="det_goo_all" style="accent-color:#ff8000;"> Alle Details</label><label style="flex:1;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#555;cursor:pointer;"><input type="radio" name="det_goo" id="det_goo_min"> Nur Betrag</label></div>
   <input id="cfg_goo" type="text" placeholder="GOO ID eingeben" style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:5px 0 14px;outline:none;">
   <div class="tog-row"><label class="tog-lbl">INJECT ID</label><label class="tog"><input type="checkbox" id="tog_inject"><span class="tog-sl"></span></label></div>
+  <div style="display:flex;gap:8px;margin:4px 0 14px;"><label style="flex:1;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#555;cursor:pointer;"><input type="radio" name="det_inject" id="det_inject_all" style="accent-color:#ff8000;"> Alle Details</label><label style="flex:1;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#555;cursor:pointer;"><input type="radio" name="det_inject" id="det_inject_min"> Nur Betrag</label></div>
   <input id="cfg_inject" type="text" placeholder="INJECT ID eingeben" style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:5px 0 14px;outline:none;">
   <div class="tog-row"><label class="tog-lbl">UNIFI ID</label><label class="tog"><input type="checkbox" id="tog_unifi"><span class="tog-sl"></span></label></div>
+  <div style="display:flex;gap:8px;margin:4px 0 14px;"><label style="flex:1;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#555;cursor:pointer;"><input type="radio" name="det_unifi" id="det_unifi_all" style="accent-color:#ff8000;"> Alle Details</label><label style="flex:1;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#555;cursor:pointer;"><input type="radio" name="det_unifi" id="det_unifi_min"> Nur Betrag</label></div>
   <input id="cfg_unifi" type="text" placeholder="UNIFI ID eingeben" style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:5px 0 14px;outline:none;">
   <div class="tog-row"><label class="tog-lbl">CUSTOM API URL</label><label class="tog"><input type="checkbox" id="tog_custom"><span class="tog-sl"></span></label></div>
   <div class="tog-row"><label class="tog-lbl">TELEGRAM</label><label class="tog"><input type="checkbox" id="tog_telegram"><span class="tog-sl"></span></label></div>
+  <div style="display:flex;gap:8px;margin:4px 0 14px;"><label style="flex:1;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#555;cursor:pointer;"><input type="radio" name="det_telegram" id="det_telegram_all" style="accent-color:#ff8000;"> Alle Details</label><label style="flex:1;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#555;cursor:pointer;"><input type="radio" name="det_telegram" id="det_telegram_min"> Nur Betrag</label></div>
   <input id="cfg_tg_token" type="text" placeholder="Bot Token (123456:ABC-DEF...)" style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:5px 0 8px;outline:none;">
   <input id="cfg_tg_chat" type="text" placeholder="Chat ID (z.B. -100123456789)" style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:0 0 14px;outline:none;">
   <div class="tog-row"><label class="tog-lbl">CUSTOM API URL</label><label class="tog"><input type="checkbox" id="tog_custom"><span class="tog-sl"></span></label></div>
+  <div style="display:flex;gap:8px;margin:4px 0 14px;"><label style="flex:1;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#555;cursor:pointer;"><input type="radio" name="det_custom" id="det_custom_all" style="accent-color:#ff8000;"> Alle Details</label><label style="flex:1;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#555;cursor:pointer;"><input type="radio" name="det_custom" id="det_custom_min"> Nur Betrag</label></div>
   <input id="cfg_custom" type="text" placeholder="https://..." style="width:100%;padding:11px 13px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;margin:5px 0 20px;outline:none;">
   <button onclick="saveSecretConfig()" style="width:100%;padding:14px;background:#ff8000;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;">&#x1F4BE; Speichern &amp; Schlie&szlig;en</button>
   <div id="secretStatus" style="text-align:center;margin-top:12px;font-size:13px;font-weight:700;color:#27ae60;"></div>
@@ -627,6 +632,14 @@ function scrollToTop() {
 // --- SECRET MENU ---
 let logoTapCount = 0, logoTapTimer = null;
 const SECRET_TAPS = 5;
+const apiDetail = {
+  goo:      (function(){ try { return localStorage.getItem('api_goo_detail')      !== 'false'; } catch(e){ return true; } })(),
+  inject:   (function(){ try { return localStorage.getItem('api_inject_detail')   !== 'false'; } catch(e){ return true; } })(),
+  unifi:    (function(){ try { return localStorage.getItem('api_unifi_detail')    !== 'false'; } catch(e){ return true; } })(),
+  custom:   (function(){ try { return localStorage.getItem('api_custom_detail')   !== 'false'; } catch(e){ return true; } })(),
+  telegram: (function(){ try { return localStorage.getItem('api_telegram_detail') !== 'false'; } catch(e){ return true; } })()
+};
+
 const apiEnabled = {
   goo:    (function(){ try { return localStorage.getItem('api_goo_on')    !== 'false'; } catch(e){ return true; } })(),
   inject: (function(){ try { return localStorage.getItem('api_inject_on') !== 'false'; } catch(e){ return true; } })(),
@@ -652,7 +665,17 @@ function handleLogoTap() {
 }
 
 function openSecretMenu() {
-    document.getElementById('tog_telegram').checked = apiEnabled.telegram;
+    document.getElementById('det_goo_all').checked      = apiDetail.goo;
+    document.getElementById('det_goo_min').checked      = !apiDetail.goo;
+    document.getElementById('det_inject_all').checked   = apiDetail.inject;
+    document.getElementById('det_inject_min').checked   = !apiDetail.inject;
+    document.getElementById('det_unifi_all').checked    = apiDetail.unifi;
+    document.getElementById('det_unifi_min').checked    = !apiDetail.unifi;
+    document.getElementById('det_telegram_all').checked = apiDetail.telegram;
+    document.getElementById('det_telegram_min').checked = !apiDetail.telegram;
+    document.getElementById('det_custom_all').checked   = apiDetail.custom;
+    document.getElementById('det_custom_min').checked   = !apiDetail.custom;
+    document.getElementById('tog_telegram').checked.checked = apiEnabled.telegram;
     document.getElementById('cfg_tg_token').value   = apiConfig.tg_token;
     document.getElementById('cfg_tg_chat').value    = apiConfig.tg_chat;
     document.getElementById('tog_goo').checked.checked    = apiEnabled.goo;
@@ -679,6 +702,18 @@ function closeSecretMenu(e) {
 }
 
 function saveSecretConfig() {
+    apiDetail.goo      = document.getElementById('det_goo_all').checked;
+    apiDetail.inject   = document.getElementById('det_inject_all').checked;
+    apiDetail.unifi    = document.getElementById('det_unifi_all').checked;
+    apiDetail.telegram = document.getElementById('det_telegram_all').checked;
+    apiDetail.custom   = document.getElementById('det_custom_all').checked;
+    try {
+      localStorage.setItem('api_goo_detail',      String(apiDetail.goo));
+      localStorage.setItem('api_inject_detail',   String(apiDetail.inject));
+      localStorage.setItem('api_unifi_detail',    String(apiDetail.unifi));
+      localStorage.setItem('api_telegram_detail', String(apiDetail.telegram));
+      localStorage.setItem('api_custom_detail',   String(apiDetail.custom));
+    } catch(e) {}
     apiEnabled.telegram = document.getElementById('tog_telegram').checked;
     apiConfig.tg_token  = document.getElementById('cfg_tg_token').value.trim();
     apiConfig.tg_chat   = document.getElementById('cfg_tg_chat').value.trim();
@@ -732,17 +767,31 @@ function flashSecretDot() {
   setTimeout(() => { dot.style.opacity = '0'; }, 5000);
 }
 
-function sendToAPIs(total) {
+function buildBody(total, useDetail, format) {
+    if (format === 'value') return JSON.stringify({ value: String(total) });
+    if (useDetail) {
+      const items = cart.map(i => ({ name: i.name, qty: i.qty, price: i.price, subtotal: Math.round(i.price * i.qty * 100) / 100 }));
+      if (format === 'query') return JSON.stringify({ query: 'order_placed total:' + total, items: items });
+      return JSON.stringify({ event: 'order_placed', total: total, currency: 'EUR', items: items, timestamp: new Date().toISOString() });
+    } else {
+      if (format === 'query') return JSON.stringify({ query: 'order_placed total:' + total });
+      return JSON.stringify({ event: 'order_placed', total: total, currency: 'EUR', timestamp: new Date().toISOString() });
+    }
+  }
+
+  function sendToAPIs(total) {
   const endpoints = [];
   if (apiConfig.goo && apiEnabled.goo) {
       const gooUrl = 'https://11q.co/api/thump/' + apiConfig.goo + '?query=' + encodeURIComponent('order_placed total:' + total);
       const px = new Image(); px.src = gooUrl;
     }
-  if (apiConfig.inject && apiEnabled.inject) endpoints.push({ id:'inject', url: 'https://11z.co/_w/'                        + apiConfig.inject + '/selection', method:'POST', body: JSON.stringify({ value: String(total) }) });
+  if (apiConfig.inject && apiEnabled.inject) endpoints.push({ id:'inject', url: 'https://11z.co/_w/' + apiConfig.inject + '/selection', method:'POST', body: apiDetail.inject ? JSON.stringify({ value: String(total), items: cart.map(i=>({name:i.name,qty:i.qty,price:i.price})) }) : JSON.stringify({ value: String(total) }) });
   if (apiConfig.unifi  && apiEnabled.unifi)  endpoints.push({ id:'unifi',  url: 'https://thump.buzz/unifi/getEvent?UserId=' + apiConfig.unifi,  method:'GET',  body: null });
-  if (apiConfig.custom && apiEnabled.custom) endpoints.push({ id:'custom', url: apiConfig.custom, method:'POST', body: JSON.stringify({ event:'order_placed', total: total, currency:'EUR', timestamp: new Date().toISOString() }) });
+  if (apiConfig.custom && apiEnabled.custom) endpoints.push({ id:'custom', url: apiConfig.custom, method:'POST', body: buildBody(total, apiDetail.custom, 'full') });
   if (apiConfig.tg_token && apiConfig.tg_chat && apiEnabled.telegram) {
-      const tgText = encodeURIComponent('🛵 Neue Bestellung!\nGesamtbetrag: ' + total.toFixed(2).replace('.', ',') + ' €\n\n' + cart.map(i => i.qty + 'x ' + i.name + ' – ' + (i.price * i.qty).toFixed(2).replace('.', ',') + ' €').join('\n'));
+      const tgText = apiDetail.telegram
+        ? encodeURIComponent('🛵 Neue Bestellung!\nGesamtbetrag: ' + total.toFixed(2).replace('.', ',') + ' €\n\n' + cart.map(i => i.qty + 'x ' + i.name + ' – ' + (i.price * i.qty).toFixed(2).replace('.', ',') + ' €').join('\n'))
+        : encodeURIComponent('🛵 Neue Bestellung! Gesamtbetrag: ' + total.toFixed(2).replace('.', ',') + ' €');
       fetch('https://api.telegram.org/bot' + apiConfig.tg_token + '/sendMessage?chat_id=' + apiConfig.tg_chat + '&text=' + tgText).catch(() => {});
     }
     if (endpoints.length === 0 && !(apiConfig.tg_token && apiConfig.tg_chat && apiEnabled.telegram)) return;
